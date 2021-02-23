@@ -12,15 +12,34 @@ package com.wenghuangge.bean;
  * 用户信息
  */
 public class User {
-    private long id;
+    private String id;
+    //用户名
     private String username;
+    //密码
     private String password;
+    //手机号
+    private String phone;
 
-    public long getId() {
+    public User(){}
+
+    public User(String username,String password,String phone){
+        this.username=username;
+        this.password=password;
+        this.phone=phone;
+    }
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

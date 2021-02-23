@@ -3,6 +3,7 @@ package com.wenghuangge.mapper;
 import com.wenghuangge.bean.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @ProjectName footmap
@@ -21,17 +22,29 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    @Select(value = "select username,password from user where username = #{username}")
+
+    @Select(value = "select username,password,phone from user where username = #{username}")
     @Results({@Result(property = "username",column = "username"),
-              @Result(property = "password",column = "password")})
+              @Result(property = "password",column = "password"),
+              @Result(property = "phone",column = "phone")})
     User findUserByName(@Param("username") String username);
+
+    /***
+     * 查询手机是否注册过 如果注册过找出关联的用户
+     * @param phone
+     * @return
+     */
+    @Select(value = "select username,password from user where phone = #{phone}")
+    @Results({@Result(property = "username",column = "username"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "phone",column = "phone")})
+    User findUserByPhone(@Param("phone") String phone);
 
     /***
      * 注册 插入一条记录
      * @param user
      */
-    @Insert("insert into user values(#{id},#{username},#{password})")
-    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    @Insert("insert into user(id,username,password,phone) values(#{id},#{username},#{password},#{phone})")
     void regiest(User user);
 
     /**

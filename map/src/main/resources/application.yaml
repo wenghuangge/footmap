@@ -1,9 +1,37 @@
+
 #指定服务端口
 server:
   port: 8080
 spring:
+  #mysql数据库配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/footmap?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: root
+  #redis配置
+  redis:
+    host: 112.126.89.10
+    database: 1
+    port: 6379
+    password: 123456
+    jedis:
+      pool:
+        max-active: 8  #连接池最大数量
+        max-wait: -1ms #连接池最大阻塞时间(负值没有限制)
+        max-idle: 8 #连接池最大空闲连接
+        min-idle: 0 #连接池最小空闲连接
+    timeout: 3000ms #连接超时时间
+    key:
+      prefix:
+        authCode: "portal:authCode:"
+        orderId: "portal:orderId:"
+      expire:
+        authCode: 60 #验证码超时时间
+
+  #freemarker模板配置
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .html
+    content-type: text/html
+    charset: UTF-8

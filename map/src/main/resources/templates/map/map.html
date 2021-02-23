@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title></title>
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=e259cf258f092d5d57b98833ae85c33f">
-    </script>
-    <script  type="text/javascript">
+    <title>Footmap</title>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=e259cf258f092d5d57b98833ae85c33f"></script>
+    <script  type="text/javascript"></script>
 
-
-
-    </script>
     <style type="text/css">
-        #container {width:1000px; height: 800px;}
+        #container {
+            width:100%; height: 800px;
+            margin-left: 20%;
+        }
+
     </style>
 
 </head>
 <body>
+欢迎<h5 sec:authentication="name"></h5>
+<a href="/logout">注销</a>
 <div id="container"></div>
 <script>
     //生成地图
@@ -27,8 +29,12 @@
     var marker = new AMap.Marker({
         position:[116.39, 39.9]//位置
     })
-    map.add(marker);//添加到地图
 
+    var marker1 = new AMap.Marker({
+        position:[126.39, 39.9]//位置
+    })
+    map.add(marker);//添加到地图
+    map.add(marker1);
 
     //添加折线
     //也提供了绘制圆Circle、折线 Polyline、多边形 Polygon、椭圆 Ellipse、矩形 Rectangle、贝瑟尔曲线 BesizerCurve等矢量图形的能力
