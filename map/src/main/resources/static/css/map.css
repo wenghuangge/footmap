@@ -1,0 +1,17 @@
+#container{
+    width: 70%;
+    height:800px;
+    float: left;
+}
+#box{
+    display:none;
+    background-color: goldenrod;
+    width: 180px;
+    height: 30px;
+}
+#box-title{
+    display:block;
+}
+#right{
+    width: 20%;height: 800px;background-color: red;float:left;
+}

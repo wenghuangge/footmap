@@ -28,7 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/photo")
 public class PhotoController {
-
+    private int userId=46;
     @Autowired
     private PhotoService photoService;
 
@@ -117,4 +117,8 @@ public class PhotoController {
         return apiResult;
     }
 
+    @GetMapping("/city")
+    public List<Photo> getPhotosByCity(@RequestParam("cityname") String cityname){
+        return photoService.getPhotoByCity(userId, cityname);
+    }
 }

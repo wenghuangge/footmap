@@ -47,6 +47,12 @@
         SELECT * FROM photo  WHERE  userId=#{userId} ORDER BY time DESC
     </select>
 
+
+    <select id="getByCity"  resultMap="resultListPhoto">
+        SELECT * FROM photo  WHERE  userId=#{userId} and city=#{city} ORDER BY time DESC
+    </select>
+
+
     <update id="updateById" parameterType="com.wenghuangge.bean.po.Photo">
         UPDATE  photo
         SET

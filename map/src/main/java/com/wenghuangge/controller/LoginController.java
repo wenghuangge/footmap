@@ -11,27 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/map")
 public class LoginController {
+    private int userId=46;
     @Autowired
     private PhotoMapper photoMapper;
     @GetMapping("/map")
-    public String map3(HttpServletRequest request,int userId) {
+    public List<Photo> map() {
         List<Photo> photos = photoMapper.getAllByUserId(userId);
-         //[{name:'北京'}, {name:'拉萨',value:50}],
-        /*List<String> res=new ArrayList<>();
-        List<String> res1=new ArrayList<>();
-        String now="温州市";
-        res.add(now);
-        res1.add(now);
-        for(int i=0;i<photos.size();i++){
-            String city=photos.get(i).getCity();
-            res.add(now);
-            res1.add(city);
-        }*/
-        request.setAttribute("photos",photos);
-        return "/map/map-test";
+        return photos;
 
     }
 

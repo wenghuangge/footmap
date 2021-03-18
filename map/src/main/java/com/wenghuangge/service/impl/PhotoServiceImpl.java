@@ -261,5 +261,10 @@ public class PhotoServiceImpl implements PhotoService {
         photoMapper.save(photo);
     }
 
+    @Override
+    public List<Photo> getPhotoByCity(int userId, String cityName) {
+        return photoMapper.getByCity(userId, cityName);
+    }
+
 
 }

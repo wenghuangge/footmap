@@ -70,4 +70,6 @@ public interface PhotoService {
      * @param photo
      */
     public void save(Photo photo);
+
+    List<Photo> getPhotoByCity(int userId,String cityName);
 }
