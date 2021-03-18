@@ -4,8 +4,11 @@ app.controller("mapinit",function ($scope,$http) {
         $scope.photos=response.data;
     })
 })
-app.controller("cityPhotos",function ($scope,$http) {
+app.controller("photoCtr",function ($scope,$http) {
 
+    $scope.detail=function (a){
+        console.log(a);
+    };
 
     $scope.$watch('cityname',function (newValue,OldValue){
         if(typeof newValue=="undefined") return;
@@ -15,7 +18,6 @@ app.controller("cityPhotos",function ($scope,$http) {
             console.log("切换城市数据:");
             console.log($scope.photos);
         })
-
     },true)
-
 })
+

@@ -48,5 +48,7 @@ public class Photo {
      * 0：未上传
      */
     private Byte visible;
+    //时间戳转成字符串
+    private String sTime;
 
 }

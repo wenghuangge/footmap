@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.jws.WebParam;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -263,7 +264,16 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public List<Photo> getPhotoByCity(int userId, String cityName) {
-        return photoMapper.getByCity(userId, cityName);
+
+        List<Photo> byCity = photoMapper.getByCity(userId, cityName);
+        for (Photo photo : byCity) {
+            photo.setImgList(imgStringToList(photo.getImgUrl()));
+            Long time = photo.getTime();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String ctime=simpleDateFormat.format(new Date(time));
+            photo.setSTime(ctime);
+        }
+        return byCity;
     }
 
 
