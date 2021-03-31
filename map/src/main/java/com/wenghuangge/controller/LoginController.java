@@ -21,7 +21,6 @@ public class LoginController {
     public List<Photo> map() {
         List<Photo> photos = photoMapper.getAllByUserId(userId);
         return photos;
-
     }
 
 }

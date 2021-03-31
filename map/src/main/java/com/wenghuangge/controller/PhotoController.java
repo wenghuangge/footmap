@@ -34,19 +34,16 @@ public class PhotoController {
 
     /**
      * 获取用户的全部照片
-     * @param userId
+     * @param
      * @return
     **/
 
     @GetMapping("/map")
-    public ApiResult<Map> getMap(Integer userId){
+    public List<PhotoMapVO> getMap(){
+
         List<PhotoMapVO> list = photoService.getMap(userId);
-        Map<String,Object> map=new HashMap<>();
-        ApiResult<Map> result=new ApiResult<>();
-        result.setStatus(0);
-        map.put("data",list);
-        result.setData(map);
-        return result;
+
+        return list;
 
     }
     /**
@@ -73,20 +70,16 @@ public class PhotoController {
         return photoService.getNum(userId);
     }
 
+
     /***
      * 足迹的详细信息
      * @param id
      * @return
      */
-    @PostMapping("/detail")
-    public ApiResult<Map> photoDetail(int id){
-        ApiResult<Map> result=new ApiResult<>();
-        Map<Object,Object> map=new HashMap<>();
+    @GetMapping("/detail")
+    public Photo photoDetail(int id){
         Photo photoById = photoService.getPhotoById(id);
-        map.put("data", photoById);
-        result.setStatus(0);
-        result.setData(map);
-        return result;
+        return photoById;
     }
 
     /**

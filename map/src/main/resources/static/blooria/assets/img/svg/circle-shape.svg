@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="170" height="255" viewBox="0 0 170 255">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_28" data-name="Rectangle 28" width="170" height="255" transform="translate(1338 2802.682)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_3" data-name="Mask Group 3" transform="translate(-1338 -2802.682)" opacity="0.3" clip-path="url(#clip-path)">
+    <g id="Ellipse_9" data-name="Ellipse 9" transform="translate(1409 2956.682)" fill="none" stroke="#dddede" stroke-width="50">
+      <circle cx="110" cy="110" r="110" stroke="none"/>
+      <circle cx="110" cy="110" r="85" fill="none"/>
+    </g>
+    <g id="Path_83" data-name="Path 83" transform="translate(1355 2902.682)" fill="none">
+      <path d="M164,0A164,164,0,1,1,0,164,164,164,0,0,1,164,0Z" stroke="none"/>
+      <path d="M 164 30 C 90.11213684082031 30 30 90.11213684082031 30 164 C 30 237.8878479003906 90.11213684082031 298 164 298 C 237.8878479003906 298 298 237.8878479003906 298 164 C 298 90.11213684082031 237.8878479003906 30 164 30 M 164 0 C 254.57470703125 0 328 73.42529296875 328 164 C 328 254.57470703125 254.57470703125 328 164 328 C 73.42529296875 328 0 254.57470703125 0 164 C 0 73.42529296875 73.42529296875 0 164 0 Z" stroke="none" fill="#dddede"/>
+    </g>
+  </g>
+</svg>
