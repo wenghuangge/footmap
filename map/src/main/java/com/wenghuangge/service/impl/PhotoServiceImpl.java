@@ -6,13 +6,14 @@ import com.wenghuangge.bean.po.Photo;
 import com.wenghuangge.bean.vo.PhotoMapVO;
 import com.wenghuangge.mapper.PhotoMapper;
 import com.wenghuangge.service.PhotoService;
+import com.wenghuangge.utils.TimeUtils;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.jws.WebParam;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
@@ -38,16 +39,16 @@ public class PhotoServiceImpl implements PhotoService {
         this.modelMapper=modelMapper;
     }
     @Override
-    public List<PhotoMapVO> getMap(Integer userId) {
+    public List<Photo> getMap(Integer userId) {
         List<Photo> photoList=photoMapper.getAllByUserId(userId);
-        List<PhotoMapVO> photoMapVOS=new ArrayList<>();
+
         photoList.forEach(photo -> {
-            PhotoMapVO photoMapVO=modelMapper.map(photo, PhotoMapVO.class);
-            List<String> list = JSONObject.parseArray(photoMapVO.getImgUrl(), String.class);
-            photoMapVO.setImgList(list);
-            photoMapVOS.add(photoMapVO);
+
+            List<String> list = JSONObject.parseArray(photo.getImgUrl(), String.class);
+            photo.setImgList(list);
+            photo.setSTime(TimeUtils.timeChange(photo.getTime()));
         });
-        return photoMapVOS;
+        return photoList;
     }
 
     /**
@@ -86,7 +87,10 @@ public class PhotoServiceImpl implements PhotoService {
         String photo_url6="";
         //去过最多的省以及城市
         String most_province="中国",most_city="家乡";
-
+        //去过的城市
+        List<String> cityList=new ArrayList<>();
+        //去过的省份
+        List<String> provinceList=new ArrayList<>();
         Integer valP=0,valC=0; //去过次数最多的城市和省的次数
         int cnt=0;
         long time=0;
@@ -105,6 +109,7 @@ public class PhotoServiceImpl implements PhotoService {
                 String city = photo.getCity();
                 Integer num = vis_city.get(city);
                 if(num==null){
+                    cityList.add(city);
                     num=0;
                 }
                 num+=1;
@@ -123,6 +128,7 @@ public class PhotoServiceImpl implements PhotoService {
                 Integer num=vis_province.get(province);
                 if(num==null){
                     num=0;
+                    provinceList.add(province);
                 }
                 num+=1;
                 if(num>valP){
@@ -214,6 +220,12 @@ public class PhotoServiceImpl implements PhotoService {
         for(int i=0;i<4;i++){
             retString.add(Cit[i]);
         }
+        //去过的城市-19
+        retString.add(cityList);
+        //去过的省份-20
+        retString.add(provinceList);
+        //所有第足迹
+        retString.add(photoList);
         return retString;
     }
 
@@ -226,6 +238,7 @@ public class PhotoServiceImpl implements PhotoService {
     public Photo getPhotoById(int id) {
         Photo photo=photoMapper.getById(id);
         List<String> list = JSONObject.parseArray(photo.getImgUrl(), String.class);
+        photo.setSTime(TimeUtils.timeChange(photo.getTime()));
         photo.setImgList(list);
         return photo;
     }
@@ -274,6 +287,44 @@ public class PhotoServiceImpl implements PhotoService {
             photo.setSTime(ctime);
         }
         return byCity;
+    }
+
+    /***
+     * 获取所有去过的城市其中的一张照片
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Photo> getVisitCity(int userId) {
+        List<Photo> photos = photoMapper.getAllByUserId(userId);
+        Map<String,Integer> map =new HashMap<>();
+        List<Photo> result=new ArrayList<>();
+        for (Photo photo : photos) {
+
+            if(map.containsKey(photo.getCity()));
+            else{
+                List<String> list = JSONObject.parseArray(photo.getImgUrl(), String.class);
+                photo.setImgList(list);
+                map.put(photo.getCity(),1);
+                result.add(photo);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Photo> getPhotoByProvince(int userId, String province) {
+
+        List<Photo> byProvince = photoMapper.getByProvince(userId, province);
+
+        for (Photo photo : byProvince) {
+            photo.setImgList(imgStringToList(photo.getImgUrl()));
+            Long time = photo.getTime();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String ctime=simpleDateFormat.format(new Date(time));
+            photo.setSTime(ctime);
+        }
+        return byProvince;
     }
 
 

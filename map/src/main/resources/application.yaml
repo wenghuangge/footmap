@@ -5,10 +5,10 @@ server:
 spring:
   #mysql数据库配置
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/footmap?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
-    password: root
+    password: 12345678
 
   main:
     allow-bean-definition-overriding: true
@@ -55,5 +55,5 @@ fdfs:
     width: 150
     height: 150
   tracker-list:
-    - 112.126.89.10:22122
-  web-server-url: http://${ip}:8888/
+    - 121.199.55.115:22122
+  web-server-url: http://${ip}:80/

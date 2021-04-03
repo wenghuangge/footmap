@@ -13,132 +13,183 @@
     <script src="/js/controller/mapController.js"></script>
     <link rel="stylesheet"  href="/css/map.css">
 
-
-    <!--ace模板-->
-    <link rel="stylesheet" href="/ace/assets/css/ace-skins.min.css" />
-    <link rel="stylesheet" href="/ace/assets/css/ace-rtl.min.css" />
-    <script src="/ace/assets/js/ace-extra.min.js"></script>
-    <script src="/ace/assets/js/html5shiv.min.js"></script>
-    <script src="/ace/assets/js/respond.min.js"></script>
-    <link rel="stylesheet" href="/ace/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" href="/ace/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/ace/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <!--blooria-->
+    <link rel="stylesheet" href="/blooria/assets/css/base-style.css">
+    <link rel="stylesheet" href="/blooria/assets/css/style.css">
+    <script src="/blooria/assets/js/dark-light.js"></script>
 
 </head>
-<body ng-app="myMap">
-<!--head-->
-<body class="no-skin">
-<!---->
-<div id="navbar" class="navbar navbar-default          ace-save-state">
-    <div class="navbar-container ace-save-state" id="navbar-container">
-        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
-            <span class="sr-only">Toggle sidebar</span>
-
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
-        </button>
-
-        <div class="navbar-header pull-left">
-            <a href="map.html" class="navbar-brand">
-                <small>
-                    <i class="fa fa-leaf"></i>
-                    首页
-                </small>
-            </a>
-            <a href="map.html" class="navbar-brand">
-                <small>
-                    足迹
-                </small>
-            </a>
-            <a href="map.html" class="navbar-brand">
-                <small>
-                    发布足迹
-                </small>
-            </a>
-            <a href="map.html" class="navbar-brand">
-                <small>
-                    我的故事
-                </small>
-            </a>
-        </div>
-
-        <div class="navbar-buttons navbar-header pull-right" role="navigation">
-            <ul class="nav ace-nav">
-
-                <li class="light-blue dropdown-modal">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="/ace/assets/images/avatars/user.jpg" alt="Jason's Photo" />
-                        <span class="user-info">
-									<small>Welcome,</small>
-									Jason
-								</span>
-
-                        <i class="ace-icon fa fa-caret-down"></i>
-                    </a>
-
-                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>
-                            <a href="#">
-                                <i class="ace-icon fa fa-cog"></i>
-                                Settings
-                            </a>
-                        </li>
-
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="#">
-                                <i class="ace-icon fa fa-power-off"></i>
-                                Logout
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div><!-- /.navbar-container -->
+<body ng-app="myMap" class="placeholder" ng-controller="photoCtr">
+<div class="loader-wrapper">
+    <div class="count"></div>
+    <div class="loader"></div>
+    <div class="loader2"></div>
 </div>
-
-
-</div><!-- /.main-container -->
-<div class="clean"></div>
-<!--head end-->
-<div id="container"></div>
-<div id="right" ng-controller="photoCtr">
-    <h1>{{cityname}}</h1>
-    <div class="clean"></div>
-    <div class="each" ng-repeat="item in photos">
-        <h2 class="title">{{ item.title }}</h2>
-        <div class="img-area">
-            <div ng-repeat="img in item.imgList track by $index" >
-                <img src="{{img}}" class="img-each">
+<header class="header-area ">
+    <div class="container">
+        <div class="header-wrapper d-flex align-items-center justify-content-between">
+            <!--header-logo-->
+            <div class="header-logo">
+                <a href="index.html">FootMap</a>
+            </div>
+            <!-- menu-bar -->
+            <div class="menu-bar">
+                <ul class="d-flex align-items-center justify-content-between">
+                    <li><a href="/map/map.html">Home</a></li>
+                    <li><a href="/map/story.html">Visit</a></li>
+                    <li><a href="/map/mystory.html">Story</a></li>
+                    <li><a href="/map/record.html">Record</a></li>
+                </ul>
+            </div>
+            <!-- sign-in area -->
+            <div class="sign-in-area">
+                <ul class="d-flex align-items-center justify-content-between">
+                    <li class="popup"><img src="/blooria/assets/img/svg/search.svg" alt=""></li>
+                    <li class="dark-light"><img src="/blooria/assets/img/svg/dark-light.svg" alt=""></li>
+                    <li class="sign-click relative">Sign in
+                        <!-- sign-in dropdawn -->
+                        <div class="sign-in-card">
+                            <h3>Welcome back.</h3>
+                            <p>Sign in to get personalized story recommendations, ollow authors and topics you love, and interact with stories.</p>
+                            <div class="input-group-icon radious-6 mb-30">
+                                <input type="email" placeholder="Type your email...">
+                                <img src="/blooria/assets/img/svg/mail-sign.svg" alt="">
+                            </div>
+                            <div class="sign-link">
+                                <p>Don't have an account?</p>
+                                <a href="#">Sign Up</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <!--mobile menu icon-->
+                        <div class="menu-toggole">
+                            <span class="menu-show comon-tab">
+                                <img src="/blooria/assets/img/svg/toggle.svg" alt="">
+                            </span>
+                            <span class="menu-close comon-tab">
+                                <img src="/blooria/assets/img/svg/close.svg" alt="">
+                            </span>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
+    </div>
+    <!-- menu search popup -->
+    <div class="search-popup-area">
+        <div class="search-option">
+            <div class="search-box">
+                <img src="/blooria/assets/img/svg/search.svg" alt="">
+                <input id="search" name="search" type="text" data-list=".data-list" placeholder="Type your keywords...">
+            </div>
+            <div class="data-list-wrapper">
+                <ul class="data-list">
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Ingredients to look for in skin care products <span>April 30, 2019</span></h4>
+                                </div>
+                                <p>Read our top seven health benefits of fishing to learn why, whether you're a match angler or a weekend hobbyist.</p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Sky Parachute Adventure <span>April 25, 2019</span></h4>
+                                </div>
+                                <p>Muay Thai (Thai boxing) is the most popular contact sport in Thailand, and a pillar of Thai culture, so much so that for years the Thai government has been asking, unsuccessfully, for it to be included as an Olympic sport. </p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Small boy and girl on road<span>April 18, 2019</span></h4>
+                                </div>
+                                <p>Many parents are tired of the pink and blue divide in the toy aisles. Just last month, the White House held a conference in toys and media, with many toy manufacturers and experts attending. After feedback, Target announced in 2015 that it would get rid of signs labeling toys for boys or for girls</p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Colorful women digital art face<span>April 21, 2019</span></h4>
+                                </div>
+                                <p>The first thing I do before starting an illustration is to browse through my folder of inspiration. Inside are plenty of sub-folders, containing images of lighting, faces, human figures, clothing, illustrations from my favourite artists, animals, caterpillars, flowers and plenty more besides.</p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
 
-        <div class="clean"></div>
-        <div class="bottom-content">
-            <div class="address">{{ item.address }}</div>
-            <div class="bottom">
-                <view class="time">{{item.stime}}</view>
-                <button class="detail" ng-click="detail(item.id)" data-storyid="{{ item.id }}" >详情</button>
-                <button class="delete"  data-pointId="{{ item.id }}">删除</button>
+                </ul>
+            </div>
+        </div>
+        <div class="popup-close-icon">
+            <img src="/blooria/assets/img/svg/close-icon.svg" alt="">
+        </div>
+    </div>
+</header>
+<div id="container"></div>
+
+
+<div class="col-lg-4 mb-50" style="float: right;width: 30%;margin-top: 6%;height: 700px;overflow: auto">
+    <div class="side-bar-wrapper">
+        <div class="row">
+            <div class="col-lg-12 col-md-6 col-sm-7">
+                <div class="latest-post">
+                    <h4>{{cityname}}</h4>
+                    <div class="latest-single-post" ng-repeat="item in photos">
+                        <div class="latest-single-img">
+                            <img src="{{item.imgList[0]}}" height="80px" alt="">
+                        </div>
+                        <div class="latest-single-content">
+                            <div class="latext-scontent-title">
+                                <h5>Travel</h5>
+                                <span>{{item.stime}}</span>
+                            </div>
+                            <div class="latext-scontent">
+                                <h4><a ng-click="detail(item.id)">{{item.simcon}}</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pro-add" style="background-image:url(assets/img/sidebar-img/promotion-add.jpg)">
+                    <button class="btn btn-white btn-radious-6">添加故事</button>
+                    <img src="/blooria/assets/img/svg/circle-shape.svg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-6 col-sm-5">
+                <div class="categories-area">
+                    <h4>城市</h4>
+                    <ul>
+                        <li ng-repeat="item in citys"><a href="#" ng-click="changeCity(item.city)">{{item.city}}</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+</div>
 <script>
     var photos;
     $.ajax({
-       type:"GET",
-       url:"/map/map",
-       datatype:"json",
-       async:false,
-       success:function (data){
-           photos=data;
-       }
+        type:"GET",
+        url:"/map/map",
+        datatype:"json",
+        async:false,
+        success:function (data){
+            photos=data;
+        }
     });
 
 </script>
@@ -494,37 +545,37 @@
     };
     //单点测试
     series.push({
-            itemStyle:{
-                color:"#a6c84c"
-            },
-            name: '城市',
-            type: 'effectScatter',
-            coordinateSystem: 'geo',
-            data: convertData1(data1.sort(function (a, b) {
-                return b.value - a.value;
-            }).slice(0, 6)),
-            symbolSize: function (val) {
-                return val[2] / 10;
-            },
-            encode: {
-                value: 2
-            },
-            showEffectOn: 'render',
-            rippleEffect: {
-                brushType: 'stroke'
-            },
-            hoverAnimation: true,
-            label: {
-                formatter: '{b}',
-                position: 'right',
-                show: true
-            },
-            itemStyle: {
-                shadowBlur: 10,
-                shadowColor: '#333'
-            },
-            zlevel: 10
-        });
+        itemStyle:{
+            color:"#a6c84c"
+        },
+        name: '城市',
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        data: convertData1(data1.sort(function (a, b) {
+            return b.value - a.value;
+        }).slice(0, 6)),
+        symbolSize: function (val) {
+            return val[2] / 10;
+        },
+        encode: {
+            value: 2
+        },
+        showEffectOn: 'render',
+        rippleEffect: {
+            brushType: 'stroke'
+        },
+        hoverAnimation: true,
+        label: {
+            formatter: '{b}',
+            position: 'right',
+            show: true
+        },
+        itemStyle: {
+            shadowBlur: 10,
+            shadowColor: '#333'
+        },
+        zlevel: 10
+    });
     //测试
     var startPoint = {
         x: 104.114129,
@@ -730,249 +781,27 @@
     migrationMapChart.setOption(option)
 </script>
 
+<!-- Jquery -->
+<script src="/blooria/assets/js/default-js/jquery-3.3.1.min.js"></script>
+<script src="/blooria/assets/js/default-js/jquery-migrate-1.4.1.min.js"></script>
+<script src="/blooria/assets/js/default-js/popper.js"></script>
+<script src="/blooria/assets/js/default-js/bootstrap.min.js"></script>
+<!--searchbox js-->
+<script src="/blooria/assets/js/plugin/jquery.hideseek.min.js"></script>
+<!--isotop js-->
+<script src="/blooria/assets/js/plugin/isotop-pakage-min.js"></script>
+<!-- IMAGE LOADED JS -->
+<script src="/blooria/assets/js/plugin/imagesloaded.pkgd.min.js"></script>
+<!-- owl carousel -->
+<script src="/blooria/assets/js/plugin/owl-carousel/owl.carousel.min.js"></script>
+<script src="/blooria/assets/js/plugin/owl-carousel/owl-custom.js"></script>
+<!--video popup-->
+<script src="/blooria/assets/js/plugin/youtube-overlay.js"></script>
+<!-- highlight js -->
+<script src="/blooria/assets/js/plugin/highlight.min.js"></script>
 
-<script src="/ace/assets/js/jquery-1.11.3.min.js"></script>
-<![endif]-->
-<script type="text/javascript">
-    if('ontouchstart' in document.documentElement) document.write("<script src='/ace/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-</script>
-<script src="/ace/assets/js/bootstrap.min.js"></script>
-
-<!-- page specific plugin scripts -->
-
-<!--[if lte IE 8]>
-<script src="/ace/assets/js/excanvas.min.js"></script>
-<![endif]-->
-<script src="/ace/assets/js/jquery-ui.custom.min.js"></script>
-<script src="/ace/assets/js/jquery.ui.touch-punch.min.js"></script>
-<script src="/ace/assets/js/jquery.easypiechart.min.js"></script>
-<script src="/ace/assets/js/jquery.sparkline.index.min.js"></script>
-<script src="/ace/assets/js/jquery.flot.min.js"></script>
-<script src="/ace/assets/js/jquery.flot.pie.min.js"></script>
-<script src="/ace/assets/js/jquery.flot.resize.min.js"></script>
-
-<!-- ace scripts -->
-<script src="/ace/assets/js/ace-elements.min.js"></script>
-<script src="/ace/assets/js/ace.min.js"></script>
-
-<!-- inline scripts related to this page -->
-<script type="text/javascript">
-    jQuery(function($) {
-        $('.easy-pie-chart.percentage').each(function(){
-            var $box = $(this).closest('.infobox');
-            var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
-            var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
-            var size = parseInt($(this).data('size')) || 50;
-            $(this).easyPieChart({
-                barColor: barColor,
-                trackColor: trackColor,
-                scaleColor: false,
-                lineCap: 'butt',
-                lineWidth: parseInt(size/10),
-                animate: ace.vars['old_ie'] ? false : 1000,
-                size: size
-            });
-        })
-
-        $('.sparkline').each(function(){
-            var $box = $(this).closest('.infobox');
-            var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-            $(this).sparkline('html',
-                {
-                    tagValuesAttribute:'data-values',
-                    type: 'bar',
-                    barColor: barColor ,
-                    chartRangeMin:$(this).data('min') || 0
-                });
-        });
-
-
-        //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
-        //but sometimes it brings up errors with normal resize event handlers
-        $.resize.throttleWindow = false;
-
-        var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
-        var data = [
-            { label: "social networks",  data: 38.7, color: "#68BC31"},
-            { label: "search engines",  data: 24.5, color: "#2091CF"},
-            { label: "ad campaigns",  data: 8.2, color: "#AF4E96"},
-            { label: "direct traffic",  data: 18.6, color: "#DA5430"},
-            { label: "other",  data: 10, color: "#FEE074"}
-        ]
-        function drawPieChart(placeholder, data, position) {
-            $.plot(placeholder, data, {
-                series: {
-                    pie: {
-                        show: true,
-                        tilt:0.8,
-                        highlight: {
-                            opacity: 0.25
-                        },
-                        stroke: {
-                            color: '#fff',
-                            width: 2
-                        },
-                        startAngle: 2
-                    }
-                },
-                legend: {
-                    show: true,
-                    position: position || "ne",
-                    labelBoxBorderColor: null,
-                    margin:[-30,15]
-                }
-                ,
-                grid: {
-                    hoverable: true,
-                    clickable: true
-                }
-            })
-        }
-        drawPieChart(placeholder, data);
-
-        /**
-         we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
-         so that's not needed actually.
-         */
-        placeholder.data('chart', data);
-        placeholder.data('draw', drawPieChart);
-
-
-        //pie chart tooltip example
-        var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
-        var previousPoint = null;
-
-        placeholder.on('plothover', function (event, pos, item) {
-            if(item) {
-                if (previousPoint != item.seriesIndex) {
-                    previousPoint = item.seriesIndex;
-                    var tip = item.series['label'] + " : " + item.series['percent']+'%';
-                    $tooltip.show().children(0).text(tip);
-                }
-                $tooltip.css({top:pos.pageY + 10, left:pos.pageX + 10});
-            } else {
-                $tooltip.hide();
-                previousPoint = null;
-            }
-
-        });
-
-        /////////////////////////////////////
-        $(document).one('ajaxloadstart.page', function(e) {
-            $tooltip.remove();
-        });
-
-
-
-
-        var d1 = [];
-        for (var i = 0; i < Math.PI * 2; i += 0.5) {
-            d1.push([i, Math.sin(i)]);
-        }
-
-        var d2 = [];
-        for (var i = 0; i < Math.PI * 2; i += 0.5) {
-            d2.push([i, Math.cos(i)]);
-        }
-
-        var d3 = [];
-        for (var i = 0; i < Math.PI * 2; i += 0.2) {
-            d3.push([i, Math.tan(i)]);
-        }
-
-
-        var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
-        $.plot("#sales-charts", [
-            { label: "Domains", data: d1 },
-            { label: "Hosting", data: d2 },
-            { label: "Services", data: d3 }
-        ], {
-            hoverable: true,
-            shadowSize: 0,
-            series: {
-                lines: { show: true },
-                points: { show: true }
-            },
-            xaxis: {
-                tickLength: 0
-            },
-            yaxis: {
-                ticks: 10,
-                min: -2,
-                max: 2,
-                tickDecimals: 3
-            },
-            grid: {
-                backgroundColor: { colors: [ "#fff", "#fff" ] },
-                borderWidth: 1,
-                borderColor:'#555'
-            }
-        });
-
-
-        $('#recent-box [data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-        function tooltip_placement(context, source) {
-            var $source = $(source);
-            var $parent = $source.closest('.tab-content')
-            var off1 = $parent.offset();
-            var w1 = $parent.width();
-
-            var off2 = $source.offset();
-            //var w2 = $source.width();
-
-            if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-            return 'left';
-        }
-
-
-        $('.dialogs,.comments').ace_scroll({
-            size: 300
-        });
-
-
-        //Android's default browser somehow is confused when tapping on label which will lead to dragging the task
-        //so disable dragging when clicking on label
-        var agent = navigator.userAgent.toLowerCase();
-        if(ace.vars['touch'] && ace.vars['android']) {
-            $('#tasks').on('touchstart', function(e){
-                var li = $(e.target).closest('#tasks li');
-                if(li.length == 0)return;
-                var label = li.find('label.inline').get(0);
-                if(label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation() ;
-            });
-        }
-
-        $('#tasks').sortable({
-                opacity:0.8,
-                revert:true,
-                forceHelperSize:true,
-                placeholder: 'draggable-placeholder',
-                forcePlaceholderSize:true,
-                tolerance:'pointer',
-                stop: function( event, ui ) {
-                    //just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
-                    $(ui.item).css('z-index', 'auto');
-                }
-            }
-        );
-        $('#tasks').disableSelection();
-        $('#tasks input:checkbox').removeAttr('checked').on('click', function(){
-            if(this.checked) $(this).closest('li').addClass('selected');
-            else $(this).closest('li').removeClass('selected');
-        });
-
-
-        //show the dropdowns on top or bottom depending on window height and menu position
-        $('#task-tab .dropdown-hover').on('mouseenter', function(e) {
-            var offset = $(this).offset();
-
-            var $w = $(window)
-            if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
-                $(this).addClass('dropup');
-            else $(this).removeClass('dropup');
-        });
-
-    })
-</script>
+<!--nice-select js here-->
+<script src="/blooria/assets/js/plugin/nice-select/jquery.nice-select.min.js"></script>
+<script src="/blooria/assets/js/scripts.js"></script>
 </body>
 </html>

@@ -39,10 +39,9 @@ public class PhotoController {
     **/
 
     @GetMapping("/map")
-    public List<PhotoMapVO> getMap(){
+    public List<Photo> getMap(){
 
-        List<PhotoMapVO> list = photoService.getMap(userId);
-
+        List<Photo> list = photoService.getMap(userId);
         return list;
 
     }
@@ -50,7 +49,7 @@ public class PhotoController {
      * 统计用户去过的地方，生成故事
      **/
     @GetMapping("/count")
-    public ApiResult<Map> count(@RequestParam(required = false,defaultValue = "0") Long start_Time,@RequestParam(required = false,defaultValue = "99999999999999") Long end_Time,Integer userId){
+    public ApiResult<Map> count(@RequestParam(required = false,defaultValue = "0") Long start_Time,@RequestParam(required = false,defaultValue = "99999999999999") Long end_Time){
         List<Object> res=photoService.cal_palce(userId, start_Time, end_Time);
         ApiResult<Map> apiResult=new ApiResult<>();
         apiResult.setStatus(0);
@@ -110,8 +109,33 @@ public class PhotoController {
         return apiResult;
     }
 
+    /***
+     * 城市里的旅游足迹
+     * @param cityname
+     * @return
+     */
     @GetMapping("/city")
     public List<Photo> getPhotosByCity(@RequestParam("cityname") String cityname){
         return photoService.getPhotoByCity(userId, cityname);
+    }
+
+    /***
+     * 根据省份获取数据
+     * @param province
+     * @return
+     */
+    @GetMapping("/province")
+    public List<Photo> getPhotosByProvince(@RequestParam("province") String province){
+        return photoService.getPhotoByProvince(userId, province);
+    }
+
+    /***
+     * 每个去过的城市的一张标签
+     * @return
+     */
+    @CrossOrigin
+    @GetMapping("/visitcity")
+    public List<Photo> getVisitCity(){
+        return photoService.getVisitCity(userId);
     }
 }

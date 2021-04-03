@@ -151,7 +151,7 @@
         <dependency>
             <groupId>com.github.tobato</groupId>
             <artifactId>fastdfs-client</artifactId>
-            <version>1.27.2</version>
+            <version>1.26.5</version>
         </dependency>
 
         <dependency>

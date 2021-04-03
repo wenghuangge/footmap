@@ -32,4 +32,7 @@ public interface PhotoMapper {
     void delete(@Param("photoId") Integer photoId, @Param("userId") Integer userId);
 
     List<Photo> getByCity(@Param("userId") Integer userId,@Param("city") String city);
+
+    List<Photo> getByProvince(@Param("userId") Integer userId,@Param("province") String province);
+
 }

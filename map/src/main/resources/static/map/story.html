@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>blooria</title>
+    <title>足迹地图</title>
     
     <link rel="stylesheet" href="/blooria/assets/css/base-style.css">
     <link rel="stylesheet" href="/blooria/assets/css/style.css">
@@ -12,6 +12,8 @@
     <!--angularjs-->
     <script src="/js/angular.min.js"></script>
     <script src="/js/controller/story.js"></script>
+
+    <script src="/js/info.js"></script>
 </head>
 <body class="placeholder" ng-app="myMap" ng-controller="storyCtrl">
     <div class="loader-wrapper">
@@ -25,44 +27,17 @@
         <div class="header-wrapper d-flex align-items-center justify-content-between">
             <!--header-logo-->
             <div class="header-logo">
-                <a href="index.html">足迹地图</a>
+                <a href="index.html">FootMap</a>
             </div>
             <!-- menu-bar -->
             <div class="menu-bar">
                 <ul class="d-flex align-items-center justify-content-between">
-                    <li><a href="#">Home</a>
-                        <ul class="dropdown">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="homepage-sidebar.html">Home With Sidebar</a></li>
-                            <li><a href="homepage-minimal.html">Home Minimal</a></li>
-                            <li><a href="home-sidebar-minimal.html">Home Minimal Two</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="author.html">Authors</a></li>
-                    <li><a href="#">Shop</a>
-                        <ul class="dropdown">
-                            <li><a href="shop-page.html">Product</a></li>
-                            <li><a href="product-details.html">Product Details</a></li>
-                            <li><a href="card.html">Cart</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="account-two.html">Account</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Pages</a>
-                        <ul class="dropdown">
-                            <li><a href="premium-page.html"> Premium Page</a></li>
-                            <li><a href="single-author.html">Single Author</a></li>
-                            <li><a href="style-guide.html">Style Guide</a></li>
-                            <li><a href="single-blog.html">Single Blog</a></li>
-                            <li><a href="single-tag.html">Single Tag</a></li>
-                            <li><a href="single-left-sidebar.html">Single With Left sidebar</a></li>
-                            <li><a href="single-right-sidebar.html">Single With Right sidebar</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="membership.html">Membership</a></li>
-                    <li><a href="tag-page.html">Tag</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="account-page.html">Account</a></li>
+                    <li><a href="/map/map.html">Home</a></li>
+                    <li><a href="/map/story.html">Visit</a></li>
+                    <li><a href="/map/mystory.html">Story</a></li>
+                    <li><a href="/map/record.html">Record</a></li>
+
+
                 </ul>
             </div>
 
@@ -165,219 +140,103 @@
     </div>
 </header>
 
-<!-- banner area start from here 首部展示-->
-<section class="banner-area">
-    <div class="container">
-        <div class="banner-owl-area owl-carousel" data-carousel-loop="true" data-carousel-autoplay="false" data-carousel-mousedrag="true" data-carousel-items="1" data-carousel-nav="false">
-            <!--第一个-->
-            <div class="banner-single-wrapper">
-                <div class="banner-img-area">
-                    <h4>featured stories</h4>
-                    <div class="banner-img">
-                        <img src="/blooria/assets/img/homepage/banner-image.jpg" alt="">
-                    </div>
-                </div>
-                <div class="banner-content-area">
-                    <h5>Travel</h5>
-                    <h1><a href="#">You got to cool that off. and hat's the double-truth</a></h1>
-                    <h4 class="date"><span>29.Nov.2018</span> -Eiad Basha</h4>
-                    <p>Hung that found of the from diesel to the venerable, you what you spare at cleaning in coming was sign introduced attempt, then would was try make brown on small careful cheek, and spirits build needed room so times from </p>
-                    <button class="btn btn-sm btn-radious-6 btn-black">Read More</button>
-                </div>
-            </div>
-
-            <!----第二个-->
-
-        </div>
-    </div>
-
-</section>
 
 <!-- all stories section start here -->
 <section class="all-stories-area pt-100 pb-50">
     <div class="section-heading text-center">
         <h2>All Stories</h2>
     </div>
-    <div class="container">
-        <div class="row grid">
-            <div class="col-sm-6 col-lg-4 mb-30 grid-item">
+    <div class="container" >
+        <!--下拉框-->
+        <select ng-model="select_pro" ng-change="changePro(select_pro)">
+            <option value="省份">省份</option>
+            <!-- 利用js把省份添加到下拉列表里-->
+            <option value="{{item[0]}}" data="{{$index}}" ng-repeat="item in provinceArr track by $index">{{item[0]}}</option>
+
+        </select>
+        <select ng-model="select_city" ng-disabled="select_city_dis" ng-change="changeCity(select_city)">
+            <option value="城市">城市</option>
+            <!-- 利用js把省份添加到下拉列表里-->
+            <option value="{{item}}" ng-repeat="item in cityArr[select_pro_num] track by $index"  ng-if="$index>=1">{{item}}</option>
+
+        </select>
+
+
+
+        <div class="row grid" ng-repeat="item in story track by $index" ng-if="$index%3==0" style="margin-top: 50px">
+            <div class="col-sm-6 col-lg-4 mb-30 grid-item" ng-if="$index<story.length" style="width: 500px;height: 400px">
                 <div class="single-stories-card">
                     <div class="stories-card-img">
-                        <img src="/blooria/assets/img/homepage/stories-img1.jpg" alt="">
+                        <img src="{{story[$index].imgList[0]}}" alt="" width="400px" height="300px">
                     </div>
                     <div class="stories-card-content">
                         <div class="sub-title-wrapper">
-                            <h4 class="card-sub-title">Beauty</h4>
-                            <h5 class="card-date">Apr 30, 2019</h5>
+                            <h4 class="card-sub-title">
+                                {{story[$index].province}}{{story[$index].city}}
+                            </h4>
+                            <h5 class="card-date">{{story[$index].stime}}</h5>
                         </div>
-                       <h4 class="card-title"><a href="single-blog.html">Ingredients to look for in skin care products</a></h4>
+                        <h4 class="card-title"><a data-storyid="{{ story[$index].id }}" ng-click="detail(story[$index].id)">{{story[$index].title}}</a></h4>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-4 mb-30 grid-item">
+
+            <div class="col-sm-6 col-lg-4 mb-30 grid-item" ng-if="$index+1<story.length" style="width: 500px;height: 400px"  >
                 <div class="single-stories-card">
                     <div class="stories-card-img">
-                        <img src="/blooria/assets/img/homepage/stories-img2.jpg" alt="">
-                        <a href="#" class="card-img-title">Member</a>
+                        <img src="{{story[$index+1].imgList[0]}}" alt="" width="400px" height="300px">
                     </div>
                     <div class="stories-card-content">
                         <div class="sub-title-wrapper">
-                            <h4 class="card-sub-title">Cooking</h4>
-                            <h5 class="card-date">Apr 30, 2019</h5>
+                            <h4 class="card-sub-title">
+                                {{story[$index+1].province}}{{story[$index+1].city}}
+                            </h4>
+                            <h5 class="card-date">{{story[$index+1].stime}}</h5>
                         </div>
-                        <h4 class="card-title"><a href="single-blog.html">Cooking recipes anytime and anywhere</a></h4>
+                        <h4 class="card-title"><a data-storyid="{{ story[$index+1].id }}" ng-click="detail(story[$index+1].id)">{{story[$index+1].title}}</a></h4>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-4 mb-30 grid-item">
-                <div class="single-stories-card-content">
-                    <div class="sub-title-wrapper">
-                        <h4 class="card-sub-title">Technology</h4>
-                        <h5 class="card-date">Apr 30, 2019</h5>
-                    </div>
-                    <h4 class="card-title"><a href="single-blog.html">video games playing with imagination</a></h4>
-                    <p class="card-content">Glanced was, frequency, this tower, writers, a of its in of by the subdued titles extended.</p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 mb-30 grid-item">
+
+            <!--第三列-->
+            <div class="col-sm-6 col-lg-4 mb-30 grid-item" ng-if="$index+2<story.length" style="width: 500px;height: 400px">
                 <div class="single-stories-card">
                     <div class="stories-card-img">
-                        <img src="/blooria/assets/img/homepage/stories-img3.jpg" alt="">
-                        <a href="#" class="card-img-title">Premium</a>
+                        <img src="{{story[$index+2].imgList[0]}}" alt="" width="400px" height="300px">
                     </div>
                     <div class="stories-card-content">
                         <div class="sub-title-wrapper">
-                            <h4 class="card-sub-title">Travel</h4>
-                            <h5 class="card-date">Apr 30, 2019</h5>
+                            <h4 class="card-sub-title">
+                                {{story[$index+2].province}}{{story[$index+2].city}}
+                            </h4>
+                            <h5 class="card-date">{{story[$index+2].stime}}</h5>
                         </div>
-                         <h4 class="card-title"><a href="single-blog.html">Travel prudently luggage and carry on worries</a></h4>
+                        <h4 class="card-title"><a data-storyid="{{ story[$index+2].id }}" ng-click="detail(story[$index+2].id)">{{story[$index+2].title}}</a></h4>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-4 mb-30 grid-item">
-                <div class="single-stories-card-content">
-                    <div class="sub-title-wrapper">
-                        <h4 class="card-sub-title">Philosophy</h4>
-                        <h5 class="card-date">Apr 30, 2019</h5>
-                    </div>
-                    <h4 class="card-title"><a href="single-blog.html">Dream interpretation common symbols and their meanings</a></h4>
-                    <p class="card-content">Glanced was, frequency, this tower, writers, a of its in of by the subdued titles extended.</p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 mb-30 grid-item">
-                <div class="single-stories-card">
-                    <div class="stories-card-img">
-                        <img src="/blooria/assets/img/homepage/stories-img4.jpg" alt="">
-                    </div>
-                    <div class="stories-card-content">
-                        <div class="sub-title-wrapper">
-                            <h4 class="card-sub-title">Education</h4>
-                            <h5 class="card-date">Apr 30, 2019</h5>
-                        </div>
-                         <h4 class="card-title"><a href="single-blog.html">It would be totally painless - they just slip into unconsciousness</a></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 mb-md-30 grid-item">
-                <div class="single-stories-card">
-                    <div class="stories-card-img">
-                        <img src="/blooria/assets/img/homepage/stories-img5.jpg" alt="">
-                    </div>
-                    <div class="stories-card-content">
-                        <div class="sub-title-wrapper">
-                            <h4 class="card-sub-title">lifestyle</h4>
-                            <h5 class="card-date">Apr 30, 2019</h5>
-                        </div>
-                        <h4 class="card-title"><a href="single-blog.html">The reason we're gathered here on God-given, much-needed day</a></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 mb-xs-30 grid-item">
-                <div class="single-stories-card">
-                    <div class="stories-card-img">
-                        <img src="/blooria/assets/img/homepage/stories-img6.jpg" alt="">
-                        <a href="#" class="card-img-title">Free</a>
-                    </div>
-                    <div class="stories-card-content">
-                        <div class="sub-title-wrapper">
-                            <h4 class="card-sub-title">cooking</h4>
-                            <h5 class="card-date">Apr 30, 2019</h5>
-                        </div>
-                        <h4 class="card-title"><a href="single-blog.html">Why Do make ahead recipes work so well to reduce your dinner.</a></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 grid-item">
-                <div class="single-stories-card">
-                    <div class="stories-card-img">
-                        <img src="/blooria/assets/img/homepage/stories-img7.jpg" alt="">
-                    </div>
-                    <div class="stories-card-content">
-                        <div class="sub-title-wrapper">
-                            <h4 class="card-sub-title">Culture</h4>
-                            <h5 class="card-date">Apr 30, 2019</h5>
-                        </div>
-                         <h4 class="card-title"><a href="single-blog.html">Winged evening Green Him together good together</a></h4>
-                    </div>
-                </div>
-            </div>
+
+
+
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="post-order-wrapper">
-                    <ul class="d-flex align-items-center justify-content-between">
-                        <li><a href=""><img class="mr-10" src="/blooria/assets/img/svg/arrow-right.svg" alt="">Newer Post</a></li>
-                        <li><a href="">Older Post <img class="ml-10" src="/blooria/assets/img/svg/arrows-left.svg" alt=""></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+
     </div>
 </section>
+
+
 
 <!-- popular tag section start here -->
 <section class="popular-tag-area py-100 py-md-60 section-bg">
     <div class="container">
         <div class="col-md-12">
             <div class="section-heading d-flex align-items-center justify-content-between">
-                <h2>Popular Tag</h2>
-                <a href="">View all</a>
+                <h2>Citys</h2>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 mb-30">
-                    <a href="single-tag.html" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img1.jpg)">
-                        <div class="tag-title">#Lifestyle</div>
-                        <div class="tag-card">2</div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-30">
-                    <a href="single-tag.html" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img2.jpg)">
-                        <div class="tag-title">#Cooking</div>
-                        <div class="tag-card">3</div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-30">
-                    <a href="single-tag.html" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img3.jpg)">
-                        <div class="tag-title">#Education</div>
-                        <div class="tag-card">2</div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-lg-30"> 
-                    <a href="single-tag.html" class="popular-single-tag-wrapper " style="background-image:url(/blooria/assets/img/homepage/tag-img4.jpg)">
-                        <div class="tag-title">#Travel</div>
-                        <div class="tag-card">4</div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-md-30">
-                    <a href="single-tag.html" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img1.jpg)">
-                        <div class="tag-title">#Lifestyle</div>
-                        <div class="tag-card">2</div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <a href="single-tag.html" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img2.jpg)">
-                        <div class="tag-title">#Cooking</div>
-                        <div class="tag-card">3</div>
+                <div class="col-lg-4 col-md-6 mb-30" ng-repeat="item in citys track by $index" ng-click="CityTagClick(item.city)">
+                    <a href="#" class="popular-single-tag-wrapper" style="background-image:url({{item.imgList[0]}})" >
+                        <div class="tag-title">{{item.city}}</div>
+                        <div class="tag-card">{{$index+1}}</div>
                     </a>
                 </div>
             </div>
@@ -386,99 +245,13 @@
 </section>
 <!--subcribe section start here-->
 <section class="subscribe-area ">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 m-auto">
-                <div class="row align-items-center">
-                    <div class="col-md-10 m-auto">
-                        <div class="suscribe-wrapper">
-                            <div class="section-heading text-center">
-                                <h2>Newsletter</h2>
-                                <p>Subscribe to see what we're thinking & get always latest update</p>
-                            </div>
-                            <div class="subscribe-input">
-                                <input type="email" placeholder="enter your email">
-                                <button class="btn">Subscribe</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container"></div>
 </section>
-<footer class="footer-area">
-    <div class="footer-top-area">
-        <div class="container">
-            <div class="footer-top-wrapper d-flex justify-content-between">
-                <!--header-logo-->
-                <div class="footer-logo-area">
-                    <div class="header-logo ">
-                        <a href="index.html">blooria</a>
-                    </div>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                    <div class="social-icon pt-40 pt-lg-15">
-                        <h4>Follow Us</h4>
-                        <ul class="d-flex align-items-center">
-                            <li><a href="#"><img src="/blooria/assets/img/svg/facebook.svg" alt=""></a></li>
-                            <li><a href="#"><img src="/blooria/assets/img/svg/instagram.svg" alt=""></a></li>
-                            <li><a href="#"><img src="/blooria/assets/img/svg/twitter.svg" alt=""></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- menu-bar -->
-                <div class="footer-menu-bar community-area">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="../../author.html">Author</a></li>
-                        <li><a href="../../membership.html">Membership</a></li>
-                        <li><a href="../../style-guide.html">Style Guide</a></li>
-                        <li><a href="../../tag.html">Tag</a></li>
-                        <li><a href="../../single-blog.html">Blog</a></li>
-                        <li><a href="../../contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-menu-bar usefull-link">
-                    <h4>Useful Link</h4>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Sitemap</a></li>
-                        <li><a href="#">Team</a></li>
-                    </ul>
-                </div>
-                <div class="contact-area">
-                    <h4>Contact Us</h4>
-                    <div class="contact-address">
-                        <a href="#">blooria@gmail.com</a>
-                        <p>+123 456 - 789</p>
-                        <h4>Road - 13 , Block - B <span>Grand Canion , Arizona , USA</span></h4>
-                    </div>
-                    <div class="contact-app-link">
-                        <h4>See the Map</h4>
-                        <a href="#">https://www.google.com.bd/maps</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom"> 
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <p>Copyright © 2020 blooria All Rights By <a href="http://www.bootstrapmb.com/">bootstrapmb</a>.</p>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="footer-privacy-card">
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+
+<!--下拉框-->
+
+
+<footer class="footer-area"></footer>
     <!-- Jquery -->
     <script src="/blooria/assets/js/default-js/jquery-3.3.1.min.js"></script>
     <script src="/blooria/assets/js/default-js/popper.js"></script>

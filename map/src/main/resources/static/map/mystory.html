@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>足迹地图</title>
+    
+    <link rel="stylesheet" href="/blooria/assets/css/base-style.css">
+    <link rel="stylesheet" href="/blooria/assets/css/style.css">
+    <script src="/blooria/assets/js/dark-light.js"></script>
+
+    <!--angularjs-->
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/controller/storyController.js"></script>
+</head>
+<body class="placeholder" ng-app="myMap" ng-controller="storyCtrl">
+    <div class="loader-wrapper">
+        <div class="count"></div> 
+        <div class="loader"></div>
+        <div class="loader2"></div>
+    </div>
+<!-- header area start from here-->
+<!-- header area start from here-->
+<header class="header-area ">
+    <div class="container">
+        <div class="header-wrapper d-flex align-items-center justify-content-between">
+            <!--header-logo-->
+            <div class="header-logo">
+                <a href="index.html">我的故事</a>
+            </div>
+            <!-- menu-bar -->
+            <div class="menu-bar">
+                <ul class="d-flex align-items-center justify-content-between">
+                    <li><a href="/map/map.html">Home</a>
+
+                    </li>
+                    <li><a href="/map/story.html">Visit</a></li>
+                    <li><a href="#">Story</a></li>
+                    <li><a href="/map/record.html">Record</a></li>
+
+                </ul>
+            </div>
+            <!-- sign-in area -->
+            <div class="sign-in-area">
+                <ul class="d-flex align-items-center justify-content-between">
+                    <li class="popup"><img src="/blooria/assets/img/svg/search.svg" alt=""></li>
+                    <li class="dark-light"><img src="/blooria/assets/img/svg/dark-light.svg" alt=""></li>
+                    <li class="sign-click relative">Sign in
+                        <!-- sign-in dropdawn -->
+                        <div class="sign-in-card">
+                            <h3>Welcome back.</h3>
+                            <p>Sign in to get personalized story recommendations, ollow authors and topics you love, and interact with stories.</p>
+                            <div class="input-group-icon radious-6 mb-30">
+                                <input type="email" placeholder="Type your email...">
+                                <img src="/blooria/assets/img/svg/mail-sign.svg" alt="">
+                            </div>
+                            <div class="sign-link">
+                                <p>Don't have an account?</p>
+                                <a href="#">Sign Up</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                         <!--mobile menu icon-->
+                        <div class="menu-toggole">
+                            <span class="menu-show comon-tab">
+                                <img src="/blooria/assets/img/svg/toggle.svg" alt="">                
+                            </span>
+                            <span class="menu-close comon-tab">
+                                <img src="/blooria/assets/img/svg/close.svg" alt="">            
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- menu search popup -->
+    <div class="search-popup-area">
+        <div class="search-option">
+            <div class="search-box">
+                <img src="/blooria/assets/img/svg/search.svg" alt="">
+                <input id="search" name="search" type="text" data-list=".data-list" placeholder="Type your keywords...">
+            </div>
+            <div class="data-list-wrapper">
+                <ul class="data-list">
+                    <li>
+                        <a href="">
+                           <div class="search-content">
+                                 <div class="search-title">
+                                    <h4>Ingredients to look for in skin care products <span>April 30, 2019</span></h4>
+                                </div>
+                                <p>Read our top seven health benefits of fishing to learn why, whether you're a match angler or a weekend hobbyist.</p>
+                           </div>
+                           <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                           <div class="search-content">
+                                 <div class="search-title">
+                                    <h4>Sky Parachute Adventure <span>April 25, 2019</span></h4>
+                                </div>
+                                <p>Muay Thai (Thai boxing) is the most popular contact sport in Thailand, and a pillar of Thai culture, so much so that for years the Thai government has been asking, unsuccessfully, for it to be included as an Olympic sport. </p>
+                           </div>
+                           <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                           <div class="search-content">
+                                 <div class="search-title">
+                                    <h4>Small boy and girl on road<span>April 18, 2019</span></h4>
+                                </div>
+                                <p>Many parents are tired of the pink and blue divide in the toy aisles. Just last month, the White House held a conference in toys and media, with many toy manufacturers and experts attending. After feedback, Target announced in 2015 that it would get rid of signs labeling toys for boys or for girls</p>
+                           </div>
+                           <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                           <div class="search-content">
+                                 <div class="search-title">
+                                    <h4>Colorful women digital art face<span>April 21, 2019</span></h4>
+                                </div>
+                                <p>The first thing I do before starting an illustration is to browse through my folder of inspiration. Inside are plenty of sub-folders, containing images of lighting, faces, human figures, clothing, illustrations from my favourite artists, animals, caterpillars, flowers and plenty more besides.</p>
+                           </div>
+                           <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+        <div class="popup-close-icon">
+            <img src="/blooria/assets/img/svg/close-icon.svg" alt="">
+        </div>
+    </div>
+</header>
+<!-- blog banner area start from here -->
+<section class="single-blog-banner-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>我去过的省份数量:{{story.data[0]}}</h1>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 mb-30" ng-repeat="item in story.data[20] track by $index">
+                            <a href="/map/story.html?province={{item}}" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img4.jpg)">
+                                <div class="tag-title">{{item}}</div>
+                                <div class="tag-card">{{$index+1}}</div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>我去过的城市数量:{{story.data[1]}}</h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-30" ng-repeat="item in story.data[19] track by $index">
+                        <a href="/map/story.html?province={{item}}" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img1.jpg)">
+                            <div class="tag-title">{{item}}</div>
+                            <div class="tag-card">{{$index+1}}</div>
+                        </a>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>我的足迹数:{{story.data[2]}}</h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-30" ng-repeat="item in story.data[21] | limitTo:6 track by $index">
+                        <a href="/map/article.html?id={{item.id}}" class="popular-single-tag-wrapper" style="background-image:url(/blooria/assets/img/homepage/tag-img3.jpg)">
+                            <div class="tag-title">{{item.title}}</div>
+                            <div class="tag-card">{{$index+1}}</div>
+                        </a>
+                    </div>
+                </div>
+                <button onclick="window.location.href='/map/story.html';return false" class="btn btn-sm btn-radious-6 btn-black" ng-if="story.data[21].length>6">Read More</button>
+
+
+            </div>
+        </div>
+        <!--去过最多的省-->
+       <!-- <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>我去过最多的省是{{story.data[3]}}</h1>
+                </div>
+
+            </div>
+        </div>-->
+
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>我最常去多的城市是{{story.data[4]}}</h1>
+                </div>
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-md-50" ng-repeat="item in story.data[5]">
+                            <div class="related-post-card">
+                                <div class="related-post-card-img">
+                                    <img src="{{item}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--最新一次发表照片-->
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>最新发布的足迹</h1>
+                </div>
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-md-50" ng-repeat="item in story.data[6] track by $index">
+                            <div class="related-post-card">
+                                <div class="related-post-card-img">
+                                    <img src="{{item}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--去过最东边的地方是-->
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>去过最东边的地方是{{story.data[11]}}{{story.data[15]}}</h1>
+                </div>
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-md-50" ng-repeat="item in story.data[7] track by $index">
+                            <div class="related-post-card">
+                                <div class="related-post-card-img">
+                                    <img src="{{item}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--去过最南边的地方是-->
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>去过最南边的地方是{{story.data[12]}}{{story.data[16]}}</h1>
+                </div>
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-md-50" ng-repeat="item in story.data[8] track by $index">
+                            <div class="related-post-card">
+                                <div class="related-post-card-img">
+                                    <img src="{{item}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--去过最西边的地方是-->
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>去过最东边的地方是{{story.data[13]}}{{story.data[17]}}</h1>
+                </div>
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-md-50" ng-repeat="item in story.data[9] track by $index">
+                            <div class="related-post-card">
+                                <div class="related-post-card-img">
+                                    <img src="{{item}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--去过最北边的地方是-->
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+
+                <div class="single-blog-banner-wrapper">
+                    <h1>去过最东边的地方是{{story.data[14]}}{{story.data[18]}}</h1>
+                </div>
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-md-50" ng-repeat="item in story.data[10] track by $index">
+                            <div class="related-post-card">
+                                <div class="related-post-card-img">
+                                    <img src="{{item}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--subcribe section start here-->
+     <!-- Jquery -->
+    <script src="/blooria/assets/js/default-js/jquery-3.3.1.min.js"></script>
+    <script src="/blooria/assets/js/default-js/jquery-migrate-1.4.1.min.js"></script>
+    <script src="/blooria/assets/js/default-js/popper.js"></script>
+    <script src="/blooria/assets/js/default-js/bootstrap.min.js"></script>
+    <!--searchbox js-->
+    <script src="/blooria/assets/js/plugin/jquery.hideseek.min.js"></script>
+    <!--isotop js-->
+    <script src="/blooria/assets/js/plugin/isotop-pakage-min.js"></script>
+    <!-- IMAGE LOADED JS -->
+    <script src="/blooria/assets/js/plugin/imagesloaded.pkgd.min.js"></script>
+    <!-- owl carousel -->
+    <script src="/blooria/assets/js/plugin/owl-carousel/owl.carousel.min.js"></script>
+    <script src="/blooria/assets/js/plugin/owl-carousel/owl-custom.js"></script>
+    <!--video popup-->
+    <script src="/blooria/assets/js/plugin/youtube-overlay.js"></script>
+    <!-- highlight js -->
+    <script src="/blooria/assets/js/plugin/highlight.min.js"></script>
+
+    <!--nice-select js here-->
+    <script src="/blooria/assets/js/plugin/nice-select/jquery.nice-select.min.js"></script>
+    <script src="/blooria/assets/js/scripts.js"></script>
+</body>
+</html>

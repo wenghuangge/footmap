@@ -20,7 +20,7 @@ public interface PhotoService {
      * @param userId
      * @return
      */
-    List <PhotoMapVO> getMap(Integer userId);
+    List <Photo> getMap(Integer userId);
 
     /***
      * 统计函数
@@ -72,4 +72,9 @@ public interface PhotoService {
     public void save(Photo photo);
 
     List<Photo> getPhotoByCity(int userId,String cityName);
+
+    List<Photo> getVisitCity(int userId);
+
+
+    List<Photo> getPhotoByProvince(int userId, String Province);
 }
