@@ -65,5 +65,14 @@
 			userId = #{userId}
 	</update>
 
+	<select id="findUserByName" resultType="com.wenghuangge.bean.po.User">
+		SELECT *
+		FROM
+			user
+		WHERE
+			username = #{username}
+	</select>
+
+
 
 </mapper>  

@@ -1,5 +1,6 @@
 package com.wenghuangge.mapper;
 
+import com.wenghuangge.bean.po.User;
 import com.wenghuangge.bean.po.WechatUser;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
@@ -28,5 +29,6 @@ public interface UserMapper {
 
     WechatUser getInfo(Integer userId);
 
+    User findUserByName(String username);
 
 }
