@@ -250,26 +250,28 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public void save(Photo photo){
-        String url=photo.getImgUrl();
-        try {
-            String img=URLDecoder.decode(url, "UTF-8");
 
-            List<String> imgList=new ArrayList<>();
-            String[] imgs = img.split(",");
-            photo.setImgList(Arrays.asList(imgs));
-            photo.setAddress(URLDecoder.decode(photo.getAddress(), "UTF-8"));
-            photo.setContent(URLDecoder.decode(photo.getContent(), "UTF-8"));
-            photo.setTitle(URLDecoder.decode(photo.getTitle(), "UTF-8"));
-            photo.setCity(URLDecoder.decode(photo.getCity(), "UTF-8"));
-            photo.setProvince(URLDecoder.decode(photo.getProvince(), "UTF-8"));
+//        String url=photo.getImgUrl();
+//        try {
+//            String img=URLDecoder.decode(url, "UTF-8");
+//
+//            List<String> imgList=new ArrayList<>();
+//            String[] imgs = img.split(",");
+//            photo.setImgList(Arrays.asList(imgs));
+//            photo.setAddress(URLDecoder.decode(photo.getAddress(), "UTF-8"));
+//            photo.setContent(URLDecoder.decode(photo.getContent(), "UTF-8"));
+//            photo.setTitle(URLDecoder.decode(photo.getTitle(), "UTF-8"));
+//            photo.setCity(URLDecoder.decode(photo.getCity(), "UTF-8"));
+//            photo.setProvince(URLDecoder.decode(photo.getProvince(), "UTF-8"));
 
             byte b=0;
             photo.setVisible(b);
             photo.setImgUrl(JSONObject.toJSONString(photo.getImgList()));
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
 
         photo.setTime(System.currentTimeMillis());
         photoMapper.save(photo);

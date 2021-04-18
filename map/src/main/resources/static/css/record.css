@@ -1,0 +1,42 @@
+.formdiv{
+    background-color: wheat;
+    display: block;
+    margin: 100px auto;
+    width: 1000px;
+    height: 700px;
+}
+.textarea{
+    width: 700px;
+    height: 300px;
+    margin-top: 20px;
+
+}
+.input_text{
+    float: left;
+    margin-top: 20px;
+    margin-left: 0px;
+}
+.select_pro_city{
+    float: right;
+    margin-top: 20px;
+    margin-right: 50px;
+
+}
+.form_header{
+    display: block;
+    width: 700px;
+    height: 60px;
+    margin-left: 150px;
+    /*background-color: red;*/
+}
+.photo_button{
+    margin-top: 0px;
+    margin-left: 300px;
+}
+.photo_div{
+    margin-left: 150px;
+    /*background: red;*/
+    width: 700px;
+    height: 300px;
+}
+

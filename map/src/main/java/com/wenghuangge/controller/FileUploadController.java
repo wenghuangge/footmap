@@ -3,11 +3,12 @@ package com.wenghuangge.controller;
 import com.wenghuangge.config.FastDfsConfig;
 import com.wenghuangge.utils.FastDfsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ProjectName footmap
@@ -28,9 +29,12 @@ public class FileUploadController {
      * @return
      * @throws IOException
      */
-    @RequestMapping("/upload")
-    public String uploadFile(MultipartFile file) throws IOException {
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    public Map<String,Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String realpath=fastDfsUtil.uploadFile(file);
-        return realpath;
+        Map<String,Object> resultMap=new HashMap();
+        resultMap.put("imgPath",realpath);
+        return resultMap;
     }
+
 }

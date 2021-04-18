@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FootMap</title>
+
+    <link rel="stylesheet" href="/blooria/assets/css/base-style.css">
+    <link rel="stylesheet" href="/blooria/assets/css/style.css">
+    <link rel="stylesheet" href="/css/record.css">
+    <script src="/blooria/assets/js/dark-light.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--angularjs-->
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/controller/recordController.js"></script>
+
+    <style type="text/css" media="screen">
+        .upload-pic{ width: 120px;  height: 30px;  line-height: 30px; border-radius: 4px; color: #fff; position: relative; cursor: pointer;
+            font-size: 14px;  background-color: #44b549;  text-align: center;  display: inline-block;
+            vertical-align: middle; margin-left: 8px;  margin-top: 8px;  }
+        .upload-pic .up-lab,.upload-pic .up-file{ width: 100%; height: 100%; position: absolute; left: 0; top: 0; z-index: 2; overflow: hidden;}
+        .upload-pic .up-lab{ background-color: #44b549; cursor: pointer; }
+        .upload-pic .up-file{ z-index: 1;}
+        .group-coms-pic{ padding-top: 30px; overflow: hidden; }
+        .group-coms-pic .item{  width: 116px; height: 148px; border:1px solid #f0f0f0; position: relative; float: left;margin-right: 20px; margin-bottom: 20px; }
+        .group-coms-pic .pic-box{ width:118px; height:117px; border-bottom:1px solid #f0f0f0;  overflow: hidden;  position: relative;}
+        .group-coms-pic .pic-box .img{ height:117px; position: absolute; left: 50%; top: 50%;
+            transform:translate(-50%,-50%);}
+        .group-coms-pic .tk{ padding:0 9px; height: 32px; line-height: 32px; text-align: left;
+            overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis; color: #353535;  font-size: 14px;}
+        .group-coms-pic .item .del{ width:20px; height: 20px; line-height: 20px; text-align: center; border-radius: 50%; color: #fff;
+            background-color: #ff6982; cursor: pointer; font-style: normal; position: absolute; right: -10px; top: -10px; }
+    </style>
+
+    <style>
+
+
+        .rg_layout {
+            width: 1200px;
+            height: 700px;
+            border: 8px solid #EEEEEE;
+            background-color: white;
+            margin: 100px auto;
+        }
+
+        .rg_left {
+            float: left;
+            margin: 15px;
+        }
+        .rg_center {
+            float: left;
+        }
+        .rg_right {
+            float: right;
+            margin: 15px;
+        }
+
+        .rg_left > p:first-child {
+            color:#FFD026;
+            font-size: 20px;
+        }
+
+        .rg_left > p:last-child {
+            color:#A6A6A6;
+            font-size: 20px;
+        }
+
+        .rg_right > p:first-child {
+            font-size: 15px;
+
+        }
+        .rg_right p a {
+            color:pink;
+        }
+
+        .td_left {
+            width: 100px;
+            height: 45px;
+            text-align: right;
+        }
+        .td_right {
+            padding-left: 50px ;
+        }
+
+        #username, #password, #email, #name, #tel, #birthday, #checkcode {
+            width: 251px;
+            height: 32px;
+            border: 1px solid #A6A6A6;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+
+        #checkcode {
+            width: 110px;
+        }
+
+        #img_check {
+            height: 32px;
+            vertical-align: middle;
+        }
+
+        #btn_sub {
+            width: 150px;
+            height: 40px;
+            background-color: #FFD026;
+            border: 1px solid #FFD026 ;
+        }
+
+        .error {
+            color:red;
+        }
+        #td_sub {
+            padding-left: 150px;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            document.getElementById("form").onsubmit = function(){
+                return checkTitle() && checkcontent();
+            };
+            document.getElementById("title").onblur = checkTitle;
+            document.getElementById("content").onblur = checkcontent;
+        };
+
+        function checkTitle(){
+            var username = document.getElementById("title").value;
+
+            if(username == "") {
+                flag = false;
+            }
+            else falg=true;
+            var s_username = document.getElementById("s_title");
+            if(!flag){
+                s_username.innerHTML = "标题不能为空";
+            }
+            return flag;
+        }
+
+        function checkcontent(){
+            var content = document.getElementById("content").value;
+
+            var s_content = document.getElementById("s_content");
+            if(content==""){
+                s_content.innerHTML = "内容不为空";
+                return false;
+            }
+
+
+            return true;
+        }
+
+    </script>
+
+</head>
+<body class="placeholder" ng-app="myMap" ng-controller="recordCtrl">
+<div class="loader-wrapper">
+    <div class="count"></div>
+    <div class="loader"></div>
+    <div class="loader2"></div>
+</div>
+<!-- header area start from here-->
+<!-- header area start from here-->
+<header class="header-area ">
+    <div class="container">
+        <div class="header-wrapper d-flex align-items-center justify-content-between">
+            <!--header-logo-->
+            <div class="header-logo">
+                <a href="#">发表足迹</a>
+            </div>
+            <!-- menu-bar -->
+            <div class="menu-bar">
+                <ul class="d-flex align-items-center justify-content-between">
+                    <li><a href="/map/map.html">Home</a>
+
+                    </li>
+                    <li><a href="/map/story.html">Visit</a></li>
+                    <li><a href="#">Story</a></li>
+                    <li><a href="/map/record.html">Record</a></li>
+
+                </ul>
+            </div>
+            <!-- sign-in area -->
+            <div class="sign-in-area">
+                <ul class="d-flex align-items-center justify-content-between">
+                    <li class="popup"><img src="/blooria/assets/img/svg/search.svg" alt=""></li>
+                    <li class="dark-light"><img src="/blooria/assets/img/svg/dark-light.svg" alt=""></li>
+                    <li class="sign-click relative">Sign in
+                        <!-- sign-in dropdawn -->
+                        <div class="sign-in-card">
+                            <h3>Welcome back.</h3>
+                            <p>Sign in to get personalized story recommendations, ollow authors and topics you love, and interact with stories.</p>
+                            <div class="input-group-icon radious-6 mb-30">
+                                <input type="email" placeholder="Type your email...">
+                                <img src="/blooria/assets/img/svg/mail-sign.svg" alt="">
+                            </div>
+                            <div class="sign-link">
+                                <p>Don't have an account?</p>
+                                <a href="#">Sign Up</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <!--mobile menu icon-->
+                        <div class="menu-toggole">
+                            <span class="menu-show comon-tab">
+                                <img src="/blooria/assets/img/svg/toggle.svg" alt="">
+                            </span>
+                            <span class="menu-close comon-tab">
+                                <img src="/blooria/assets/img/svg/close.svg" alt="">
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- menu search popup -->
+    <div class="search-popup-area">
+        <div class="search-option">
+            <div class="search-box">
+                <img src="/blooria/assets/img/svg/search.svg" alt="">
+                <input id="search" name="search" type="text" data-list=".data-list" placeholder="Type your keywords...">
+            </div>
+            <div class="data-list-wrapper">
+                <ul class="data-list">
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Ingredients to look for in skin care products <span>April 30, 2019</span></h4>
+                                </div>
+                                <p>Read our top seven health benefits of fishing to learn why, whether you're a match angler or a weekend hobbyist.</p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Sky Parachute Adventure <span>April 25, 2019</span></h4>
+                                </div>
+                                <p>Muay Thai (Thai boxing) is the most popular contact sport in Thailand, and a pillar of Thai culture, so much so that for years the Thai government has been asking, unsuccessfully, for it to be included as an Olympic sport. </p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Small boy and girl on road<span>April 18, 2019</span></h4>
+                                </div>
+                                <p>Many parents are tired of the pink and blue divide in the toy aisles. Just last month, the White House held a conference in toys and media, with many toy manufacturers and experts attending. After feedback, Target announced in 2015 that it would get rid of signs labeling toys for boys or for girls</p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="search-content">
+                                <div class="search-title">
+                                    <h4>Colorful women digital art face<span>April 21, 2019</span></h4>
+                                </div>
+                                <p>The first thing I do before starting an illustration is to browse through my folder of inspiration. Inside are plenty of sub-folders, containing images of lighting, faces, human figures, clothing, illustrations from my favourite artists, animals, caterpillars, flowers and plenty more besides.</p>
+                            </div>
+                            <img src="/blooria/assets/img/svg/arrow-left.svg" alt="">
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="popup-close-icon">
+            <img src="/blooria/assets/img/svg/close-icon.svg" alt="">
+        </div>
+    </div>
+</header>
+<!-- blog banner area start from here -->
+<!--<section class="single-blog-banner-area" id="main_contain">-->
+<!--    <div class="container">-->
+
+<!--        <div class="row grid formdiv">-->
+
+<!--            <div class="col-sm-6 col-lg-4 mb-30 grid-item"  style="width: 800px;height: 800px">-->
+<!--                <form   name="form1" enctype=”multipart/form-data” >-->
+
+<!--                    <div class="form_header">-->
+<!--                        <input  class="input_text" type="text" name="aaa" placeholder="取个标题吧" ng-model="photo.title" />-->
+<!--                        <div class="select_pro_city">-->
+
+<!--                            &lt;!&ndash;下拉框&ndash;&gt;-->
+<!--                            <select ng-model="select_pro" ng-change="changePro(select_pro)">-->
+
+<!--                                <option value="省份">省份</option>-->
+<!--                                <option value="{{item[0]}}" ng-repeat="item in provinceArr track by $index">{{item[0]}}</option>-->
+<!--                            </select>-->
+<!--                            <select ng-model="select_city" ng-disabled="select_city_dis">-->
+<!--                                <option value="城市">城市</option>-->
+<!--                                &lt;!&ndash; 利用js把省份添加到下拉列表里&ndash;&gt;-->
+<!--                                <option value="{{item}}" ng-repeat="item in cityArr[select_pro_num] track by $index"  ng-if="$index>=1">{{item}}</option>-->
+<!--                            </select>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <textarea placeholder="旅行中的一些有趣的事情........" ng-model="photo.content" class="textarea"></textarea>-->
+
+
+<!--                    <div class="photo_div">-->
+
+<!--                        <section id="vue-imgUpload">-->
+
+<!--                            <div class="upload-pic">-->
+<!--                                <label class="up-lab" for="add-pic-btn">上传图片</label>-->
+<!--                                <input type="file" accept="image/*" multiple class="up-file" id="add-pic-btn" onchange="angular.element(this).scope().img_upload(this.files)">-->
+<!--                            </div>-->
+
+<!--                            <div class="group-coms-pic">-->
+<!--                                <div class="item" ng-repeat="item in photo.imgList track by $index" >-->
+<!--                                    <div class="pic-box">-->
+<!--                                        <img class="img" ng-src="{{item}}">-->
+<!--                                    </div>-->
+
+
+<!--                                    <span class="del" ng-click="img_del($index)" >x</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div style="margin-top: 10px;margin-left: 10px">-->
+
+<!--&lt;!&ndash;                                <input type="submit" name="" value="提交"/>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </section>-->
+<!--                        <input type="submit"  value="提交" ng-click="upload()"/>-->
+
+<!--                    </div>-->
+
+<!--                </form>-->
+<!--            </div>-->
+<!--    </div>-->
+<!--</section>-->
+<div class="rg_layout">
+
+    <div class="rg_left">
+        <p>记录</p>
+        <p>USER REGISTER</p>
+    </div>
+
+    <div class="rg_center">
+        <div class="rg_form">
+            <form action="#" id="form" method="get">
+                <table>
+                    <tr>
+                        <td class="td_left"><label for="title">标题</label></td>
+                        <td class="td_right">
+                            <input type="text" name="title" id="title" placeholder="请输入标题" ng-model="photo.title">
+                            <span id="s_title" class="error"></span>
+                        </td>
+                    </tr>
+
+                    <div class="select_pro_city">
+
+                            <!--下拉框-->
+                            <select ng-model="select_pro" ng-change="changePro(select_pro)">
+
+                                <option value="省份">省份</option>
+                                <option value="{{item[0]}}" ng-repeat="item in provinceArr track by $index">{{item[0]}}</option>
+                            </select>
+                            <select ng-model="select_city" ng-disabled="select_city_dis">
+                                <option value="城市">城市</option>
+                                <!-- 利用js把省份添加到下拉列表里-->
+                                <option value="{{item}}" ng-repeat="item in cityArr[select_pro_num] track by $index"  ng-if="$index>=1">{{item}}</option>
+                            </select>
+
+                        </div>
+                    <tr>
+                        <td class="td_left"><label for="content">内容</label></td>
+                        <td class="td_right">
+                            <textarea placeholder="旅行中的一些有趣的事情........" ng-model="photo.content" id="content" name="content" class="textarea"></textarea>
+                            <span id="s_content" class="error"></span>
+                        </td>
+                    </tr>
+                    <tr style="margin-left: 400px">
+                        <td class="td_left"><label for=""></label></td>
+                        <td class="td_right">
+                        <div class="upload-pic" style="width:700px;height:30px;background-color: #a0bccd;margin-top: 5px;margin-left: 0px">
+                            <label class="up-lab" for="add-pic-btn" style="">上传图片</label>
+                            <input type="file" accept="image/*" multiple class="up-file" id="add-pic-btn" onchange="angular.element(this).scope().img_upload(this.files)">
+                        </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="td_left"></td>
+                        <td class="td_right"><input type="submit"  value="提交" style="width:700px;margin-left: 0px" ng-click="upload()"/></td>
+                    </tr>
+
+
+                    <div class="group-coms-pic">
+                    <div class="item" ng-repeat="item in photo.imgList track by $index" style="height: 80px" >
+                        <div class="pic-box" >
+                            <img class="img" ng-src="{{item}}">
+                        </div>
+
+
+                        <span class="del" ng-click="img_del($index)" >x</span>
+                    </div>
+
+<!--                    <tr>-->
+<!--                        <td class="td_left"><label for="birthday">出生日期</label></td>-->
+<!--                        <td class="td_right"><input type="date" name="birthday" id="birthday" placeholder="请输入出生日期"></td>-->
+<!--                    </tr>-->
+
+
+                </table>
+
+            </form>
+        </div>
+    </div>
+
+<!--    <div class="rg_right">-->
+<!--        <p>已有账号?<a href="#">立即登录</a></p>-->
+<!--    </div>-->
+
+</div>
+<!--subcribe section start here-->
+<!-- Jquery -->
+<script src="/blooria/assets/js/default-js/jquery-3.3.1.min.js"></script>
+<script src="/blooria/assets/js/default-js/jquery-migrate-1.4.1.min.js"></script>
+<script src="/blooria/assets/js/default-js/popper.js"></script>
+<script src="/blooria/assets/js/default-js/bootstrap.min.js"></script>
+<!--searchbox js-->
+<script src="/blooria/assets/js/plugin/jquery.hideseek.min.js"></script>
+<!--isotop js-->
+<script src="/blooria/assets/js/plugin/isotop-pakage-min.js"></script>
+<!-- IMAGE LOADED JS -->
+<script src="/blooria/assets/js/plugin/imagesloaded.pkgd.min.js"></script>
+<!-- owl carousel -->
+<script src="/blooria/assets/js/plugin/owl-carousel/owl.carousel.min.js"></script>
+<script src="/blooria/assets/js/plugin/owl-carousel/owl-custom.js"></script>
+<!--video popup-->
+<script src="/blooria/assets/js/plugin/youtube-overlay.js"></script>
+<!-- highlight js -->
+<script src="/blooria/assets/js/plugin/highlight.min.js"></script>
+
+<!--nice-select js here-->
+<script src="/blooria/assets/js/plugin/nice-select/jquery.nice-select.min.js"></script>
+<script src="/blooria/assets/js/scripts.js"></script>
+</body>
+</html>

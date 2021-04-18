@@ -104,8 +104,13 @@ public class PhotoController {
     @PostMapping("/save")
     public ApiResult<Map> photoSave(@RequestBody Photo photo) {
         ApiResult<Map> apiResult=new ApiResult<>();
+
+        photo.setUserId(userId);
+
         photoService.save(photo);
+
         apiResult.setStatus(0);
+
         return apiResult;
     }
 

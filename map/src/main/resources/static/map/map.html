@@ -4,10 +4,12 @@
 <head>
     <title>足迹地图</title>
     <meta charset="utf-8">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=SetfMX0ek0HtPZ1ZmaQrTNar677GbDGA"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
     <script type="text/javascript" src="/js/bmap.js"></script>
     <script type="text/javascript" src="/js/china.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=SetfMX0ek0HtPZ1ZmaQrTNar677GbDGA"></script>
+
+
     <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
     <script src="/js/angular.min.js"></script>
     <script src="/js/controller/mapController.js"></script>
@@ -430,6 +432,7 @@
     var convertData1 = function (data) {
         var res = [];
         for (var i = 0; i < data.length; i++) {
+
             var geoCoord = geoCoordMap[data[i].name];
             if (geoCoord) {
                 res.push({
@@ -440,13 +443,23 @@
         }
         return res;
     }
-    var data1=[{name: '台州市', value: 140},
-        {name: '三亚市', value: 140},
-        {name: '大兴安岭地区', value: 140},
-        {name: '喀什地区', value: 140},
-        {name: '佳木斯市', value: 140},
-        {name: '温州市', value: 140}];
 
+    // var data1=[{name: '台州市', value: 140},
+    //     {name: '三亚市', value: 140},
+    //     {name: '大兴安岭地区', value: 140},
+    //     {name: '喀什地区', value: 140},
+    //     {name: '佳木斯市', value: 140},
+    //     {name: '温州市', value: 140},
+    //     {name: '天津市', value: 140},
+    // ]
+    var data1 = [];
+    for(var i=0;i<photos.length;i++) {
+        var temp={
+            name:photos[i].city,
+            value:140
+        };
+        data1.push(temp);
+    }
     //航线颜色
     var color = ['#a6c84c', '#ffa022', '#46bee9'];
     var series = [];
@@ -551,9 +564,7 @@
         name: '城市',
         type: 'effectScatter',
         coordinateSystem: 'geo',
-        data: convertData1(data1.sort(function (a, b) {
-            return b.value - a.value;
-        }).slice(0, 6)),
+        data: convertData1(data1),
         symbolSize: function (val) {
             return val[2] / 10;
         },
