@@ -11,7 +11,15 @@
 			(null,#{openId},#{sessionId},#{gender},#{avatarUrl},#{country},#{province},#{city},#{language},#{createTime})
 	</insert>
 
-    <select id="getInfo" resultType="com.wenghuangge.bean.po.WechatUser">
+
+	<insert id="saveUser" parameterType="com.wenghuangge.bean.po.User" keyProperty="userId" useGeneratedKeys="true">
+		INSERT INTO
+		user(username,password,phone)
+		VALUE (#{username},#{password},#{phone})
+	</insert>
+
+
+	<select id="getInfo" resultType="com.wenghuangge.bean.po.WechatUser">
         SELECT
         	userId, avatarUrl, openId
         FROM

@@ -13,5 +13,5 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface RegisterService {
-    public Map<String,Object> validateNum(@RequestBody Map<String,Object> requestMap);
+    public Map<String,Object> validateNum(Map<String,Object> requestMap);
 }

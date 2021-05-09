@@ -10,10 +10,14 @@
         VALUE
         (#{userId},#{longitude},#{latitude},#{imgUrl},#{time},#{praiseNum},#{province},#{city},#{label},#{address},#{visible},#{photoTime},#{title},#{content})
     </insert>
-    
-    
 
-    
+    <!--根据id更新photo-->
+    <update id="photoUpdateById" parameterType="com.wenghuangge.bean.po.Photo">
+        UPDATE  photo
+        SET
+            content=#{content} , title=#{title} ,  province=#{province} , city=#{city} , image=#{imgUrl}
+        where id =#{id}
+    </update>
     
     <update id="updateVisible" parameterType="com.wenghuangge.bean.po.Photo">
         UPDATE  photo
@@ -47,6 +51,9 @@
         SELECT * FROM photo  WHERE  userId=#{userId} ORDER BY time DESC
     </select>
 
+    <select id="review" resultMap="resultListPhoto">
+        SELECT * FROM photo  WHERE  userId=#{userId} ORDER BY time ASC
+    </select>
 
     <select id="getByCity"  resultMap="resultListPhoto">
         SELECT * FROM photo  WHERE  userId=#{userId} and city=#{city} ORDER BY time DESC

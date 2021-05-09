@@ -26,6 +26,8 @@ public interface PhotoMapper {
 
     List<Photo> getAllByUserId(@Param("userId") Integer userId);
 
+    List<Photo> review(@Param("userId") Integer userId,@Param("start") Long start,@Param("end") Long end);
+
     void updateById(Photo photo, @Param("userId") Integer userId);
     
     
@@ -35,4 +37,5 @@ public interface PhotoMapper {
 
     List<Photo> getByProvince(@Param("userId") Integer userId,@Param("province") String province);
 
+    void photoUpdateById(Photo photo);
 }

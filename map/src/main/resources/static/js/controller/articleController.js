@@ -18,5 +18,16 @@ angular.module('myApp', []).controller('articleCtrl', function ($location,$scope
     $scope.photoId=$scope.getParam();
     $scope.photoDetail($scope.photoId);
 
+    $scope.edit=function () {
+        window.location="/map/record.html?id="+$scope.photoId;
+    }
 
+    $scope.delete_photo = function () {
+        if (confirm("确定要删除吗？")) {
+            $http.get("/photo/delete?id="+$scope.photoId).then(function (response){
+                window.location="/map/story.html";
+            });
+        }
+
+    }
 });

@@ -9,29 +9,21 @@ spring:
     url: jdbc:mysql://localhost:3306/footmap?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 12345678
-
   main:
     allow-bean-definition-overriding: true
   #redis配置
   redis:
-    host: 112.126.89.10
+    host: 121.199.55.115
     database: 1
     port: 6379
-    password: 123456
+    password: 12345678
     jedis:
       pool:
         max-active: 8  #连接池最大数量
-        max-wait: -1ms #连接池最大阻塞时间(负值没有限制)
+        max-wait: -1 #连接池最大阻塞时间(负值没有限制)
         max-idle: 8 #连接池最大空闲连接
         min-idle: 0 #连接池最小空闲连接
     timeout: 3000ms #连接超时时间
-    key:
-      prefix:
-        authCode: "portal:authCode:"
-        orderId: "portal:orderId:"
-      expire:
-        authCode: 60 #验证码超时时间
-
   #freemarker模板配置
   freemarker:
     template-loader-path: classpath:/templates/

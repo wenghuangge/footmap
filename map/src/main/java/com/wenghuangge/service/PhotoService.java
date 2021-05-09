@@ -61,7 +61,7 @@ public interface PhotoService {
 
     /**
      * 根据Id删除照片
-     * @param id
+     * @param
      */
     void delete(int photoId,int userId);
 
@@ -77,4 +77,8 @@ public interface PhotoService {
 
 
     List<Photo> getPhotoByProvince(int userId, String Province);
+
+    void photoUpdateById(Photo photo);
+
+    List<Photo> review(int userId,long start,long end);
 }

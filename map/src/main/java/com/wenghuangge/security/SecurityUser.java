@@ -24,10 +24,6 @@ public class SecurityUser extends User implements UserDetails {
             this.setId(user.getId());
             this.setUsername(user.getUsername());
             this.setPassword(user.getPassword());
-
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String encodedPassword = passwordEncoder.encode(user.getPassword().trim());
-            this.setPassword(encodedPassword);
             if(user.getPhone()!=null){
                 this.setPhone(user.getPhone());
             }

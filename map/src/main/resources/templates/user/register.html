@@ -387,9 +387,9 @@
             username:$('#username').val(),
             password:$('#password').val()
         };
-
+        console.log("注册点击");
         $.ajax({
-            url: '/user/regiester', // 后台短信发送接口
+            url: '/user/register', // 后台短信发送接口
             type: 'POST',
             dataType: 'json',
             contentType: "application/json",
@@ -399,12 +399,10 @@
                 withCredentials: true
             },
             success: function (result) {
-                   if(result.success){
-                       alert("注册成功");
-                       window.location.href="/";
-                   }else{
-                       alert(result.msg);
-                   }
+
+                alert("注册成功");
+                window.location="/map/login";
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest.status);

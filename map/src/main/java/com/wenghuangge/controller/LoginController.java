@@ -31,6 +31,7 @@ public class LoginController {
     public String root() {
         return "/map/map";
     }
+
     public User getUser() { //为了session从获取用户信息,可以配置如下
         User user = new User();
         SecurityContext ctx = SecurityContextHolder.getContext();

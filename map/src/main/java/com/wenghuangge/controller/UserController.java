@@ -3,7 +3,10 @@ package com.wenghuangge.controller;
 import com.wenghuangge.bean.dto.UserAdminLoginDTO;
 import com.wenghuangge.bean.dto.UserOAuthDTO;
 import com.wenghuangge.bean.po.ApiResult;
+import com.wenghuangge.bean.po.User;
 import com.wenghuangge.bean.vo.UserVO;
+import com.wenghuangge.service.RedisService;
+import com.wenghuangge.service.RegisterService;
 import com.wenghuangge.service.UserService;
 import com.wenghuangge.service.impl.UserServiceImpl;
 import com.wenghuangge.utils.AESUtil;
@@ -40,66 +43,30 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService userService;
-
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    private RedisService redisService;
+    @Autowired
+    private UserService userService;
+    private String tokenId="TOKEN-USER-";
+
+    @PostMapping("/register")
+    public Boolean register(@RequestBody Map<String,Object>requestMap) {
+
+        String phone = requestMap.get("phone").toString();//获取注册手机号码
+        String verifyCode = requestMap.get("verifyCode").toString();//获取手机验证码
+        //首先比对验证码是否失效
+        String redisauthcode= redisService.get(tokenId+phone); //传入tonkenId返回redis中的value
+        if (verifyCode.equals(redisauthcode)) {
+            User user= new User();
+            user.setUsername(((String) requestMap.get("username")));
+            user.setPassword(((String) requestMap.get("password")));
+            user.setPhone(phone);
+            userService.saveUser(user);
+            return true;
+        }
+        return false;
     }
 
-    @ApiOperation(value = "授权注册",notes = "第一次访问需要，注册完成的同时完成登录，不需要进行登录")
-    @PostMapping("/oauth")
-    public ApiResult<Map> oauth(@RequestBody @Valid UserOAuthDTO userOAuthDTO, HttpServletRequest request) {
-
-        int userId=userService.oauth(userOAuthDTO, request);
-        ApiResult<Map> apiResult = new ApiResult<>();
-        apiResult.setText("oauth success");
-        HttpSession httpSession=request.getSession();
-        String sessionid = httpSession.getId();
-        Map data=new HashMap<String,String>();
-        data.put("sessionInfo", sessionid);
-        data.put("userId", userId);
-        apiResult.setData(data);
-        apiResult.setStatus(0);
-        return apiResult;
-    }
-
-    @ApiOperation(value = "登录", notes = "已经授权的情况下进行")
-    @ApiImplicitParam(name = "code", value = "微信短期凭证")
-    @GetMapping("/login")
-    public ApiResult<String> login(@RequestParam("code") @Size(min = 1, max = 255) String code, HttpServletRequest request) {
-        userService.login(code, request);
-        ApiResult<String> apiResult = new ApiResult<>();
-        apiResult.setText("login success");
-        return apiResult;
-    }
-
-    @ApiOperation(value = "模拟登录", notes = "模拟微信登录,测试专用")
-    @GetMapping("/xLogin")
-    public ApiResult<String> xLogin(HttpSession session) {
-        session.setAttribute("userId", 1);
-        ApiResult<String> apiResult = new ApiResult<>();
-        apiResult.setText("login success");
-        return apiResult;
-    }
-
-    @ApiOperation(value = "管理员登录")
-    @PostMapping("/adminLogin")
-    public ApiResult<String> adminLogin(@RequestBody @Valid UserAdminLoginDTO userAdminLoginDTO, HttpServletRequest request) {
-        ApiResult<String> apiResult = new ApiResult<>();
-        userService.adminLogin(userAdminLoginDTO, request);
-        apiResult.setText("admin login success");
-        return apiResult;
-    }
-
-    @GetMapping("/me")
-    public ApiResult<UserVO> getMe(int userId) {
-        ApiResult<UserVO> apiResult = new ApiResult<>();
-        UserVO userVO = userService.getMe(userId);
-        apiResult.setStatus(0);
-        apiResult.setData(userVO);
-        return apiResult;
-    }
 
 
 }

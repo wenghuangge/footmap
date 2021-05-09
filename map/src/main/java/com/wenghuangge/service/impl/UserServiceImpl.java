@@ -5,6 +5,7 @@ import com.wenghuangge.bean.dto.UserAdminLoginDTO;
 import com.wenghuangge.bean.dto.UserOAuthDTO;
 import com.wenghuangge.bean.po.Jscode2session;
 import com.wenghuangge.bean.po.Photo;
+import com.wenghuangge.bean.po.User;
 import com.wenghuangge.bean.po.WechatUser;
 import com.wenghuangge.bean.vo.UserVO;
 import com.wenghuangge.context.MySessionContext;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Service;
 
@@ -192,7 +194,18 @@ public class UserServiceImpl implements UserService{
 
     }
 
+    @Override
+    public void saveUser(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encode = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encode);
+        userMapper.saveUser(user);
+    }
 
+    @Override
+    public User getUserByName(String username) {
+        return userMapper.findUserByName(username);
+    }
 
 
     private void initSession(HttpServletRequest request, Integer userId, String sessionKey) {

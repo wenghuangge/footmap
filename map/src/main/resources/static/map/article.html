@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blooria</title>
+    <title>足迹地图</title>
     
     <link rel="stylesheet" href="/blooria/assets/css/base-style.css">
     <link rel="stylesheet" href="/blooria/assets/css/style.css">
@@ -13,6 +13,24 @@
     <!--angularjs-->
     <script src="/js/angular.min.js"></script>
     <script src="/js/controller/articleController.js"></script>
+
+    <style type="text/css" media="screen">
+        .upload-pic{ width: 120px;  height: 30px;  line-height: 30px; border-radius: 4px; color: #fff; position: relative; cursor: pointer;
+            font-size: 14px;  background-color: #44b549;  text-align: center;  display: inline-block;
+            vertical-align: middle; margin-left: 8px;  margin-top: 8px;  }
+        .upload-pic .up-lab,.upload-pic .up-file{ width: 100%; height: 100%; position: absolute; left: 0; top: 0; z-index: 2; overflow: hidden;}
+        .upload-pic .up-lab{ background-color: #44b549; cursor: pointer; }
+        .upload-pic .up-file{ z-index: 1;}
+        .group-coms-pic{ padding-top: 30px; overflow: hidden; }
+        .group-coms-pic .item{  width: 116px; height: 148px; border:1px solid #f0f0f0; position: relative; float: left;margin-right: 20px; margin-bottom: 20px; }
+        .group-coms-pic .pic-box{ width:118px; height:117px; border-bottom:1px solid #f0f0f0;  overflow: hidden;  position: relative;}
+        .group-coms-pic .pic-box .img{ height:117px; position: absolute; left: 50%; top: 50%;
+            transform:translate(-50%,-50%);}
+        .group-coms-pic .tk{ padding:0 9px; height: 32px; line-height: 32px; text-align: left;
+            overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis; color: #353535;  font-size: 14px;}
+        .group-coms-pic .item .del{ width:20px; height: 20px; line-height: 20px; text-align: center; border-radius: 50%; color: #fff;
+            background-color: #ff6982; cursor: pointer; font-style: normal; position: absolute; right: -10px; top: -10px; }
+    </style>
 </head>
 <body class="placeholder" ng-app="myApp" ng-controller="articleCtrl">
     <div class="loader-wrapper">
@@ -27,14 +45,15 @@
         <div class="header-wrapper d-flex align-items-center justify-content-between">
             <!--header-logo-->
             <div class="header-logo">
-                <a href="index.html">FootMap</a>
+                <a href="/map/map.html">FootMap</a>
             </div>
             <!-- menu-bar -->
             <div class="menu-bar">
                 <ul class="d-flex align-items-center justify-content-between">
                     <li><a href="/map/map.html">Home</a></li>
                     <li><a href="/map/story.html">Visit</a></li>
-
+                    <li><a href="/map/mystory.html">Story</a></li>
+                    <li><a href="/map/record.html">Record</a></li>
                 </ul>
             </div>
             <!-- sign-in area -->
@@ -42,21 +61,9 @@
                 <ul class="d-flex align-items-center justify-content-between">
                     <li class="popup"><img src="/blooria/assets/img/svg/search.svg" alt=""></li>
                     <li class="dark-light"><img src="/blooria/assets/img/svg/dark-light.svg" alt=""></li>
-                    <li class="sign-click relative">Sign in
-                        <!-- sign-in dropdawn -->
-                        <div class="sign-in-card">
-                            <h3>Welcome back.</h3>
-                            <p>Sign in to get personalized story recommendations, ollow authors and topics you love, and interact with stories.</p>
-                            <div class="input-group-icon radious-6 mb-30">
-                                <input type="email" placeholder="Type your email...">
-                                <img src="/blooria/assets/img/svg/mail-sign.svg" alt="">
-                            </div>
-                            <div class="sign-link">
-                                <p>Don't have an account?</p>
-                                <a href="#">Sign Up</a>
-                            </div>
-                        </div>
-                    </li>
+                    <a href="/logout">
+                        Sign out
+                    </a>
                     <li>
                          <!--mobile menu icon-->
                         <div class="menu-toggole">
@@ -169,11 +176,16 @@
         </div>
     </div>
 </section>
-  <!--single-blog content area start from here-->
+ <div style="float: right;margin-right: 100px">
+     <button class="btn btn-white btn-radious-6" ng-click="edit()">编辑</button>
+     <button class="btn btn-white btn-radious-6" ng-click="delete_photo()">删除</button>
+
+ </div>
+
+    <!--single-blog content area start from here-->
 <!-- comment section start from here -->
 <section class="comment-area pt-100 pb-50"></section>
-
-    <!-- blog banner area start from here -->
+ <!-- blog banner area start from here -->
 <!--subcribe section start here-->
      <!-- Jquery -->
     <script src="/blooria/assets/js/default-js/jquery-3.3.1.min.js"></script>

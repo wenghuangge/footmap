@@ -2,11 +2,17 @@ package com.wenghuangge.controller;
 
 import com.wenghuangge.bean.po.ApiResult;
 import com.wenghuangge.bean.po.Photo;
+import com.wenghuangge.bean.po.User;
 import com.wenghuangge.bean.vo.PhotoMapVO;
 import com.wenghuangge.service.PhotoService;
+import com.wenghuangge.service.UserService;
+import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +34,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/photo")
 public class PhotoController {
-    private int userId=46;
+    private int userId=0;
     @Autowired
     private PhotoService photoService;
-
+    @Autowired
+    private UserService userService;
     /**
      * 获取用户的全部照片
      * @param
@@ -40,8 +47,16 @@ public class PhotoController {
 
     @GetMapping("/map")
     public List<Photo> getMap(){
-
+        getUser();
         List<Photo> list = photoService.getMap(userId);
+        return list;
+
+    }
+
+    @GetMapping("/review")
+    public List<Photo> review(@Param("start") Long start,@Param("end") Long end){
+        getUser();
+        List<Photo> list = photoService.review(userId,start,end);
         return list;
 
     }
@@ -50,6 +65,7 @@ public class PhotoController {
      **/
     @GetMapping("/count")
     public ApiResult<Map> count(@RequestParam(required = false,defaultValue = "0") Long start_Time,@RequestParam(required = false,defaultValue = "99999999999999") Long end_Time){
+        getUser();
         List<Object> res=photoService.cal_palce(userId, start_Time, end_Time);
         ApiResult<Map> apiResult=new ApiResult<>();
         apiResult.setStatus(0);
@@ -66,6 +82,7 @@ public class PhotoController {
      */
     @GetMapping("/num")
     public int getNum(int userId){
+        getUser();
         return photoService.getNum(userId);
     }
 
@@ -80,20 +97,26 @@ public class PhotoController {
         Photo photoById = photoService.getPhotoById(id);
         return photoById;
     }
+    /***
+     * 更新足迹
+     * @param photo
+     * @return
+     */
+    @PostMapping("/update")
+    public void photoUpdate(@RequestBody Photo photo){
+        photoService.photoUpdateById(photo);
+    }
 
     /**
      * 根据足迹点id删除足迹
      * @param id
      * @return
      */
-    @PostMapping("/delete")
-    public ApiResult<Map> photoDelete(int id,int userId){
-        ApiResult<Map> result=new ApiResult<>();
-        Map<Object,Object> map=new HashMap<>();
+    @GetMapping("/delete")
+    public void photoDelete(int id){
+
+        getUser();
         photoService.delete(id, userId);
-        result.setStatus(0);
-        result.setData(map);
-        return result;
     }
 
     /**
@@ -103,6 +126,7 @@ public class PhotoController {
      */
     @PostMapping("/save")
     public ApiResult<Map> photoSave(@RequestBody Photo photo) {
+        getUser();
         ApiResult<Map> apiResult=new ApiResult<>();
 
         photo.setUserId(userId);
@@ -121,6 +145,7 @@ public class PhotoController {
      */
     @GetMapping("/city")
     public List<Photo> getPhotosByCity(@RequestParam("cityname") String cityname){
+        getUser();
         return photoService.getPhotoByCity(userId, cityname);
     }
 
@@ -131,6 +156,7 @@ public class PhotoController {
      */
     @GetMapping("/province")
     public List<Photo> getPhotosByProvince(@RequestParam("province") String province){
+        getUser();
         return photoService.getPhotoByProvince(userId, province);
     }
 
@@ -141,6 +167,21 @@ public class PhotoController {
     @CrossOrigin
     @GetMapping("/visitcity")
     public List<Photo> getVisitCity(){
+        getUser();
         return photoService.getVisitCity(userId);
+    }
+
+    public void getUser() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            if(currentUserName!=null&&currentUserName!="") {
+                User user=userService.getUserByName(currentUserName);
+                if(user!=null){
+                    userId=user.getId();
+                }
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.wenghuangge.service;
 
 import com.wenghuangge.bean.dto.UserAdminLoginDTO;
 import com.wenghuangge.bean.dto.UserOAuthDTO;
+import com.wenghuangge.bean.po.User;
 import com.wenghuangge.bean.vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,5 +44,17 @@ public interface UserService {
      */
     UserVO getMe(Integer userId);
 
+    /**
+     * 新用户注册
+     * @param user
+     */
+    void saveUser(User user);
+
+    /**
+     * 根据用户名获取用户id
+     * @param username
+     * @return
+     */
+    User getUserByName(String username);
 
 }

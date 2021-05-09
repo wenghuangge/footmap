@@ -1,5 +1,8 @@
 var app=angular.module("myMap",[]);
-app.controller("recordCtrl",function ($scope,$http) {
+app.controller("recordCtrl",function ($scope,$location,$http) {
+    $scope.is_upload = 0;
+
+
     $scope.provinceArr = [];
     $scope.cityArr=[];
     $scope.select=function (){
@@ -110,6 +113,28 @@ app.controller("recordCtrl",function ($scope,$http) {
     $scope.photo={};
     $scope.photo.imgList=[];
 
+    //参数解析
+    $scope.getParam=function(){
+        var urlValue='';
+        var href = location.href;
+        urlValue = href.substr(href.indexOf("=") + 1);
+        if(urlValue != href) {
+            $scope.is_upload = 1;
+            $http.get("/photo/detail?id="+urlValue).then(function (response){
+                $scope.photo = response.data;
+                $scope.select_pro = $scope.photo.province;
+                $scope.changePro();
+                $scope.select_city = $scope.photo.city;
+            });
+        } else {
+            urlValue = 0;
+        }
+        console.log("获取参数:"+urlValue);
+        return urlValue;
+    };
+    $scope.getParam();
+
+
     $scope.img_upload = function(files) {       //单次提交图片的函数
         console.log("--img_upload--");
 
@@ -146,21 +171,42 @@ app.controller("recordCtrl",function ($scope,$http) {
         console.log($scope.photo);
 
     };
-
+    console.log("updata状态:"+$scope.is_upload);
     $scope.upload = function () {
+        //上传日志
+        if(parseInt($scope.is_upload) == parseInt(0)) {
 
-        $scope.photo.city = $scope.select_city;
-        $scope.photo.province = $scope.select_pro;
+            $scope.photo.city = $scope.select_city;
+            $scope.photo.province = $scope.select_pro;
+            console.log("上传");
+            $http({
+                method:'post',
+                url:'/photo/save',
+                data:$scope.photo,
+                //浏览器会帮我们把Content-Type 设置为 multipart/form-data.
+            }).then(function (response){
+                console.log("save ok!");
+                window.location = "/map/map.html";
 
-        $http({
-            method:'post',
-            url:'/photo/save',
-            data:$scope.photo,
-            //浏览器会帮我们把Content-Type 设置为 multipart/form-data.
-        }).then(function (response){
-            window.location = "/map/map.html";
+            })
+        } else {
+            console.log("日志修改");
+            $scope.photo.city = $scope.select_city;
+            $scope.photo.province = $scope.select_pro;
+            console.log($scope.photo);
+            //日志修改
+            $http({
+                method:"POST",
+                url:'/photo/update',
+                data:$scope.photo,
+                //浏览器会帮我们把Content-Type 设置为 multipart/form-data.
+            }).then(function (response){
+                console.log("update ok!");
+                window.location = "/map/article.html?id="+$scope.photo.id;
 
-        })
+            })
+        }
+
     }
 
 

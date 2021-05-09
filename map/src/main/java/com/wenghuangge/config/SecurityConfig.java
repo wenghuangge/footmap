@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception { //配置策略
         http.csrf().disable();
         http.authorizeRequests().
-                antMatchers("/js/**", "/user/**", "/sms/**", "/register", "/login").permitAll().
+                antMatchers("/js/**", "/user/**", "/sms/**", "/map/register", "/login","/user/register").permitAll().
                 //其它所有资源登录后才能访问
                         anyRequest().authenticated().
                 //设置默认登录界面
@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() { //密码加密
-        return new BCryptPasswordEncoder(4);
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -117,6 +117,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 return new SecurityUser(user);
             }
         };
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.userDetailsService(userDetailsService());
     }
 
 }

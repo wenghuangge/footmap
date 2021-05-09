@@ -1,6 +1,10 @@
 package com.wenghuangge.security;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 /**
@@ -10,9 +14,13 @@ import org.junit.jupiter.api.Test;
  * @Author wenghuangge
  * @Version 1.0
  */
+
+
 public class TestEncoder {
     @Test
     public void encoder() {
-        System.out.printf("你好");
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String pwd = passwordEncoder.encode("123456");
+        System.out.println(pwd);
     }
 }

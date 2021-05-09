@@ -251,27 +251,10 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public void save(Photo photo){
 
-//        String url=photo.getImgUrl();
-//        try {
-//            String img=URLDecoder.decode(url, "UTF-8");
-//
-//            List<String> imgList=new ArrayList<>();
-//            String[] imgs = img.split(",");
-//            photo.setImgList(Arrays.asList(imgs));
-//            photo.setAddress(URLDecoder.decode(photo.getAddress(), "UTF-8"));
-//            photo.setContent(URLDecoder.decode(photo.getContent(), "UTF-8"));
-//            photo.setTitle(URLDecoder.decode(photo.getTitle(), "UTF-8"));
-//            photo.setCity(URLDecoder.decode(photo.getCity(), "UTF-8"));
-//            photo.setProvince(URLDecoder.decode(photo.getProvince(), "UTF-8"));
-
             byte b=0;
             photo.setVisible(b);
             photo.setImgUrl(JSONObject.toJSONString(photo.getImgList()));
 
-
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
 
         photo.setTime(System.currentTimeMillis());
         photoMapper.save(photo);
@@ -327,6 +310,27 @@ public class PhotoServiceImpl implements PhotoService {
             photo.setSTime(ctime);
         }
         return byProvince;
+    }
+
+    @Override
+    public void photoUpdateById(Photo photo) {
+        photo.setImgUrl(JSONObject.toJSONString(photo.getImgList()));
+        photoMapper.photoUpdateById(photo);
+    }
+
+    @Override
+    public List<Photo> review(int userId,long start,long end) {
+        List<Photo> photoList=photoMapper.review(userId,start,end);
+        List<Photo> result=new ArrayList<>();
+        photoList.forEach(photo -> {
+            List<String> list = JSONObject.parseArray(photo.getImgUrl(), String.class);
+            photo.setImgList(list);
+            photo.setSTime(TimeUtils.timeChange(photo.getTime()));
+            if(photo.getTime()>=start&&photo.getTime()<=end) {
+                result.add(photo);
+            }
+        });
+        return result;
     }
 
 
