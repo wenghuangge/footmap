@@ -1,4 +1,4 @@
-ip: 121.199.55.115
+ip: xx.xx.xx.xx
 #指定服务端口
 server:
   port: 8080
@@ -13,7 +13,7 @@ spring:
     allow-bean-definition-overriding: true
   #redis配置
   redis:
-    host: 121.199.55.115
+    host: xx.xx.xx.xx
     database: 1
     port: 6379
     password: 12345678
@@ -42,5 +42,5 @@ fdfs:
     width: 150
     height: 150
   tracker-list:
-    - 121.199.55.115:22122
+    - xx.xx.xx.xx:22122
   web-server-url: http://${ip}:80/
