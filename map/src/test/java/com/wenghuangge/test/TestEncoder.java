@@ -1,4 +1,4 @@
-package com.wenghuangge.security;
+package com.wenghuangge.test;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

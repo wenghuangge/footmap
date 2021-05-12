@@ -1,6 +1,5 @@
 package com.wenghuangge.controller;
 
-import com.wenghuangge.config.FastDfsConfig;
 import com.wenghuangge.utils.FastDfsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

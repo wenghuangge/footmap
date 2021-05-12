@@ -258,13 +258,13 @@
 
 
 </script>
-s
 
 <script type="text/javascript">
     $(function () {
         var myChart = echarts.init(document.getElementById('container'));
         var photo_temp=[];
         var cnt=0;
+        console.log(photos);
         for(var i=0;i<photos.length;i++) {
             var time=photos[i].time;
             if(parseInt(time)>=parseInt(start) && parseInt(time) <= parseInt(end)) {
@@ -273,6 +273,7 @@ s
             }
         }
         photos=photo_temp;
+        console.log(photos);
         var BJData=[];
         for(var i=1;i<photos.length;i++){
             var temp=[];

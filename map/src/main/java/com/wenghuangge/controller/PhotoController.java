@@ -1,13 +1,10 @@
 package com.wenghuangge.controller;
 
-import com.wenghuangge.bean.po.ApiResult;
 import com.wenghuangge.bean.po.Photo;
 import com.wenghuangge.bean.po.User;
-import com.wenghuangge.bean.vo.PhotoMapVO;
 import com.wenghuangge.service.PhotoService;
 import com.wenghuangge.service.UserService;
 import io.lettuce.core.dynamic.annotation.Param;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -16,10 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ProjectName footmap
@@ -52,7 +46,21 @@ public class PhotoController {
         return list;
 
     }
+    /**
+     * 保存足迹
+     * @param
+     * @return
+     **/
 
+    @PostMapping("/save")
+    public Boolean savePhoto(@RequestBody Photo photo){
+        getUser();
+        photo.setUserId(userId);
+        photoService.save(photo);
+
+        return true;
+
+    }
     @GetMapping("/review")
     public List<Photo> review(@Param("start") Long start,@Param("end") Long end){
         getUser();
@@ -60,20 +68,7 @@ public class PhotoController {
         return list;
 
     }
-    /**
-     * 统计用户去过的地方，生成故事
-     **/
-    @GetMapping("/count")
-    public ApiResult<Map> count(@RequestParam(required = false,defaultValue = "0") Long start_Time,@RequestParam(required = false,defaultValue = "99999999999999") Long end_Time){
-        getUser();
-        List<Object> res=photoService.cal_palce(userId, start_Time, end_Time);
-        ApiResult<Map> apiResult=new ApiResult<>();
-        apiResult.setStatus(0);
-        Map <String,Object> map=new HashMap<>();
-        map.put("data",res);
-        apiResult.setData(map);
-        return apiResult;
-    }
+
 
     /***
      * 用户记录的足迹数量
@@ -119,24 +114,7 @@ public class PhotoController {
         photoService.delete(id, userId);
     }
 
-    /**
-     * 保存足迹
-     * @param photo
-     * @return
-     */
-    @PostMapping("/save")
-    public ApiResult<Map> photoSave(@RequestBody Photo photo) {
-        getUser();
-        ApiResult<Map> apiResult=new ApiResult<>();
 
-        photo.setUserId(userId);
-
-        photoService.save(photo);
-
-        apiResult.setStatus(0);
-
-        return apiResult;
-    }
 
     /***
      * 城市里的旅游足迹
@@ -171,6 +149,14 @@ public class PhotoController {
         return photoService.getVisitCity(userId);
     }
 
+    /***
+     * 获取故事
+     */
+    @GetMapping("/count")
+    public List<Object> getStory() {
+        getUser();
+        return photoService.cal_palce(userId,0L,999999999999999L);
+    }
     public void getUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

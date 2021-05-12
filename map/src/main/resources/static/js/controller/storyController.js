@@ -3,7 +3,7 @@ app.controller("storyCtrl",function ($location,$scope,$http){
 
     $scope.getStory=function (){
         $http.get("/photo/count").then(function (response){
-            $scope.story=response.data.data;
+            $scope.story=response;
             console.log($scope.story);
         });
     }
@@ -11,7 +11,6 @@ app.controller("storyCtrl",function ($location,$scope,$http){
         var hre="/map/article.html?id="+id;
         location.href=hre;
     }
-
 
     $scope.getStory();
 })

@@ -1,5 +1,4 @@
 package com.wenghuangge.controller;
-import com.google.gson.JsonObject;
 import com.wenghuangge.bean.po.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -11,8 +10,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/map")

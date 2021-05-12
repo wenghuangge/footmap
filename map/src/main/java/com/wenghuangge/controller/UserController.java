@@ -1,29 +1,13 @@
 package com.wenghuangge.controller;
 
-import com.wenghuangge.bean.dto.UserAdminLoginDTO;
-import com.wenghuangge.bean.dto.UserOAuthDTO;
-import com.wenghuangge.bean.po.ApiResult;
 import com.wenghuangge.bean.po.User;
-import com.wenghuangge.bean.vo.UserVO;
 import com.wenghuangge.service.RedisService;
-import com.wenghuangge.service.RegisterService;
 import com.wenghuangge.service.UserService;
-import com.wenghuangge.service.impl.UserServiceImpl;
-import com.wenghuangge.utils.AESUtil;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

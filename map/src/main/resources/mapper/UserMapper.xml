@@ -4,74 +4,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wenghuangge.mapper.UserMapper">
 
-	<insert id="save" parameterType="com.wenghuangge.bean.po.WechatUser" keyProperty="userId" useGeneratedKeys="true">
-		INSERT INTO
-			wechat_user(userId,openId, sessionId, gender, avatarUrl, country, province, city, language, createTime)
-		VALUES
-			(null,#{openId},#{sessionId},#{gender},#{avatarUrl},#{country},#{province},#{city},#{language},#{createTime})
-	</insert>
-
-
 	<insert id="saveUser" parameterType="com.wenghuangge.bean.po.User" keyProperty="userId" useGeneratedKeys="true">
 		INSERT INTO
 		user(username,password,phone)
 		VALUE (#{username},#{password},#{phone})
 	</insert>
 
-
-	<select id="getInfo" resultType="com.wenghuangge.bean.po.WechatUser">
-        SELECT
-        	userId, avatarUrl, openId
-        FROM
-        	wechat_user
-        WHERE
-        	userId = #{userId}
-    </select>
-
-    <select id="getByOpenId" resultType="com.wenghuangge.bean.po.WechatUser">
-		SELECT
-        	userId, openId, sessionId, gender, avatarUrl, country, province, city, language, createTime
-		FROM
-			wechat_user
-		WHERE
-			openId = #{openId}
-	</select>
-
-	<select id="get" resultType="com.wenghuangge.bean.po.WechatUser">
-		SELECT
-			userId,
-			openId,
-			sessionId,
-			gender,
-			avatarUrl,
-			country,
-			province,
-			city,
-			language,
-			createTime
-		FROM
-			wechat_user
-		WHERE
-			userId = #{userId}
-	</select>
-
-	<select id="getSessionIdByUserId" resultType="String">
-		SELECT
-			sessionId
-		FROM
-			wechat_user
-		WHERE
-			userId = #{userId}
-	</select>
-
-	<update id="updateSessionIdByUserId">
-		UPDATE
-			wechat_user
-		SET
-			sessionId = #{sessionId}
-		WHERE
-			userId = #{userId}
-	</update>
 
 	<select id="findUserByName" resultType="com.wenghuangge.bean.po.User">
 		SELECT *

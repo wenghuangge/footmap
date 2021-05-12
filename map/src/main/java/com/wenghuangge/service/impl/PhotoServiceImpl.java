@@ -3,19 +3,12 @@ package com.wenghuangge.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wenghuangge.bean.po.Photo;
-import com.wenghuangge.bean.vo.PhotoMapVO;
 import com.wenghuangge.mapper.PhotoMapper;
 import com.wenghuangge.service.PhotoService;
 import com.wenghuangge.utils.TimeUtils;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,11 +25,9 @@ public class PhotoServiceImpl implements PhotoService {
 
 
     private PhotoMapper photoMapper;
-    private ModelMapper modelMapper;
     @Autowired
-    public PhotoServiceImpl(PhotoMapper photoMapper, ModelMapper modelMapper){
+    public PhotoServiceImpl(PhotoMapper photoMapper){
         this.photoMapper=photoMapper;
-        this.modelMapper=modelMapper;
     }
     @Override
     public List<Photo> getMap(Integer userId) {
@@ -252,9 +243,8 @@ public class PhotoServiceImpl implements PhotoService {
     public void save(Photo photo){
 
             byte b=0;
-            photo.setVisible(b);
-            photo.setImgUrl(JSONObject.toJSONString(photo.getImgList()));
-
+        photo.setVisible(b);
+        photo.setImgUrl(JSONObject.toJSONString(photo.getImgList()));
 
         photo.setTime(System.currentTimeMillis());
         photoMapper.save(photo);

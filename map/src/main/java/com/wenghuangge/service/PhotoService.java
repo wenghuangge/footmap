@@ -1,9 +1,6 @@
 package com.wenghuangge.service;
 
 import com.wenghuangge.bean.po.Photo;
-import com.wenghuangge.bean.vo.PhotoMapVO;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**

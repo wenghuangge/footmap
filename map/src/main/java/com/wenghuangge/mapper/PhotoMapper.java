@@ -2,10 +2,6 @@ package com.wenghuangge.mapper;
 
 import com.wenghuangge.bean.po.Photo;
 import io.lettuce.core.dynamic.annotation.Param;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**

@@ -35,11 +35,6 @@ mybatis:
   type-aliases-package: com/wenghuangge/mapper
   mapperLocations: classpath:mapper/*.xml
 
-# wechat
-wechat:
-  appID: wxfd1e0acbc9df45bd
-  appSecret: 8dc48024bf8d789e1b17c3de911de9ef
-
 fdfs:
   so-timeout: 1500
   connect-timeout: 600
